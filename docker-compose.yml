@@ -1,0 +1,90 @@
+version: '3.9'
+
+services:
+  # ─── PostgreSQL 16 ────────────────────────────────────────
+  postgres:
+    image: postgres:16-alpine
+    container_name: synapse-postgres
+    environment:
+      POSTGRES_DB: synapse_council
+      POSTGRES_USER: synapse
+      POSTGRES_PASSWORD: synapse_dev_2026
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U synapse -d synapse_council"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - synapse-network
+    restart: unless-stopped
+
+  # ─── Redis 7 ─────────────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: synapse-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - synapse-network
+    restart: unless-stopped
+
+  # ─── Qdrant (Vector Database) ────────────────────────────
+  qdrant:
+    image: qdrant/qdrant:v1.9.7
+    container_name: synapse-qdrant
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+    volumes:
+      - qdrant_data:/qdrant/storage
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:6333/healthz"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - synapse-network
+    restart: unless-stopped
+
+  # ─── MinIO (Object Storage) ──────────────────────────────
+  minio:
+    image: minio/minio:latest
+    container_name: synapse-minio
+    environment:
+      MINIO_ROOT_USER: synapse_admin
+      MINIO_ROOT_PASSWORD: synapse_minio_2026
+    command: server /data --console-address ":9001"
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio_data:/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - synapse-network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  redis_data:
+  qdrant_data:
+  minio_data:
+
+networks:
+  synapse-network:
+    driver: bridge
