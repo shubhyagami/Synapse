@@ -28,6 +28,13 @@ const API_KEY_DOTS: { color: string; gradient: string; label: string }[] = [
   { color: '#F59E0B', gradient: 'radial-gradient(circle, #F59E0B 0%, #D97706 50%, #B45309 100%)', label: 'Key-D' },
 ]
 
+function generateUUID(): string {
+  if (typeof window !== 'undefined' && window.crypto && typeof window.crypto.randomUUID === 'function') {
+    return window.crypto.randomUUID()
+  }
+  return 'id-' + Date.now().toString(36) + '-' + Math.random().toString(36).substring(2, 9)
+}
+
 export function Chat() {
   const { id: routeId } = useParams<{ id?: string }>()
   const navigate = useNavigate()
@@ -105,7 +112,7 @@ export function Chat() {
         const agentConfig = AGENTS.find((a) => a.id === event.agentId || a.name === event.agentName)
         
         const newMsg: Message = {
-          id: crypto.randomUUID(),
+          id: generateUUID(),
           agentId: event.agentId || 'agent',
           agentName: event.agentName || 'Agent',
           agentRole: agentConfig?.role || 'Board Member',
@@ -158,7 +165,7 @@ export function Chat() {
           Object.entries(r.responses).forEach(([role, resp]) => {
             const agentConfig = AGENTS.find((a) => a.role === role)
             newMsgs.push({
-              id: crypto.randomUUID(),
+              id: generateUUID(),
               agentId: agentConfig?.id || role.toLowerCase(),
               agentName: agentConfig?.name || role,
               agentRole: role,
@@ -178,7 +185,7 @@ export function Chat() {
     if (discussion.executiveSummary) {
       const ceo = AGENTS.find((a) => a.id === 'ceo')
       newMsgs.push({
-        id: crypto.randomUUID(),
+        id: generateUUID(),
         agentId: 'ceo',
         agentName: ceo?.name || 'Alexandra Chen',
         agentRole: 'CEO',
@@ -228,7 +235,7 @@ export function Chat() {
 
     // Append user message to existing stream or new stream
     const userMsg: Message = {
-      id: crypto.randomUUID(),
+      id: generateUUID(),
       agentId: 'user',
       agentName: 'You',
       agentRole: 'User',
