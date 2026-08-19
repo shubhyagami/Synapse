@@ -1,46 +1,73 @@
 # Synapse Council
 
-> Multi-Agent AI Boardroom Platform — 10 specialized AI experts collaborate, debate, critique, improve, and reach consensus before answering.
+> A multi-agent AI boardroom platform where 10 specialized AI experts collaborate, debate, critique, and reach consensus before answering.
+
+[![License: Private](https://img.shields.io/badge/license-private-red.svg)]()
+[![Java 21](https://img.shields.io/badge/Java-21-orange.svg)]()
+[![React 19](https://img.shields.io/badge/React-19-blue.svg)]()
+[![PostgreSQL 16](https://img.shields.io/badge/PostgreSQL-16-blue.svg)]()
+
+## Features
+
+- **Multi-Agent Collaboration**: 10 specialized AI agents act as an executive board, each bringing a distinct domain perspective.
+- **Structured Debate Workflow**: Agents think independently, cross-review each other's input, critique, and iterate before reaching consensus.
+- **Live Streaming**: Real-time agent interactions via WebSocket and Server-Sent Events (SSE).
+- **Visual Graphs**: Interactive agent relationship and workflow mapping using React Flow.
 
 ## Architecture
 
-| Layer | Tech |
-|-------|------|
-| **Frontend** | React 19 + TypeScript + TailwindCSS v4 + Framer Motion + React Flow |
-| **Backend** | Spring Boot 3.4 + Java 21 + WebSocket + SSE |
+| Layer | Tech Stack |
+|-------|------------|
+| **Frontend** | React 19, TypeScript, TailwindCSS v4, Framer Motion, React Flow |
+| **Backend** | Spring Boot 3.4, Java 21, WebSocket, SSE |
 | **AI** | NVIDIA NIM (10 independent agents) |
-| **Database** | PostgreSQL 16 + Redis 7 + Qdrant 1.9 |
+| **Database** | PostgreSQL 16, Redis 7, Qdrant 1.9 |
 | **Storage** | MinIO |
 | **Infra** | Docker Compose |
 
-## Quick Start
+## Getting Started
+
+The project is divided into three main components: infrastructure (databases/queue), backend (Spring Boot), and frontend (React).
 
 ### 1. Start Infrastructure
+
+Spin up the required databases and storage services using Docker Compose:
+
 ```bash
 docker compose up -d
 ```
 
-### 2. Configure API Keys
+### 2. Configure Environment Variables
+
+Copy the example environment file and add your NVIDIA NIM API keys:
+
 ```bash
 cp backend/.env.example backend/.env
-# Edit .env with your NVIDIA NIM API keys
+# Edit backend/.env with your credentials
 ```
 
-### 3. Start Backend
+### 3. Run the Backend
+
+Start the Spring Boot server. Ensure you are in the `backend` directory:
+
 ```bash
 cd backend
-.mvn\maven\apache-maven-3.9.9\bin\mvn.cmd spring-boot:run
+mvn spring-boot:run
 ```
 
-### 4. Start Frontend
+### 4. Run the Frontend
+
+Install dependencies and start the development server:
+
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
 
-### 5. Open
-Navigate to [http://localhost:5173](http://localhost:5173)
+### 5. View the Application
+
+Navigate to [http://localhost:5173](http://localhost:5173) in your browser to access the platform.
 
 ## AI Board Members
 
@@ -59,9 +86,9 @@ Navigate to [http://localhost:5173](http://localhost:5173)
 
 ## Discussion Workflow
 
-```
-User asks → All 10 agents think independently → Cross-review →
-Critique & debate → Improve → Consensus engine → CEO summary → User
+```text
+User Query → Independent Analysis (10 Agents) → Cross-Review →
+Critique & Debate → Iterative Improvement → Consensus Engine → CEO Summary → User
 ```
 
 ## License
