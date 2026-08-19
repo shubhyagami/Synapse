@@ -2,16 +2,16 @@
 
 > A multi-agent AI boardroom platform where 10 specialized AI experts collaborate, debate, critique, and reach consensus before answering.
 
-[![License: Private](https://img.shields.io/badge/license-private-red.svg)]()
 [![Java 21](https://img.shields.io/badge/Java-21-orange.svg)]()
 [![React 19](https://img.shields.io/badge/React-19-blue.svg)]()
 [![PostgreSQL 16](https://img.shields.io/badge/PostgreSQL-16-blue.svg)]()
+[![License: Private](https://img.shields.io/badge/license-private-red.svg)]()
 
 ## Features
 
-- **Multi-Agent Collaboration**: 10 specialized AI agents act as an executive board, each bringing a distinct domain perspective.
+- **Multi-Agent Collaboration**: 10 specialized AI agents act as an executive board, each providing a distinct domain perspective.
 - **Structured Debate Workflow**: Agents think independently, cross-review each other's input, critique, and iterate before reaching consensus.
-- **Live Streaming**: Real-time agent interactions via WebSocket and Server-Sent Events (SSE).
+- **Live Streaming**: Real-time agent interactions streamed via WebSocket and Server-Sent Events (SSE).
 - **Visual Graphs**: Interactive agent relationship and workflow mapping using React Flow.
 
 ## Architecture
@@ -27,7 +27,7 @@
 
 ## Getting Started
 
-The project is divided into three main components: infrastructure (databases/queue), backend (Spring Boot), and frontend (React).
+The project is divided into three main components: infrastructure (databases/queue), backend (Spring Boot), and frontend (React). Ensure you have Docker, Java 21, and Node.js installed before proceeding.
 
 ### 1. Start Infrastructure
 
@@ -90,6 +90,13 @@ Navigate to [http://localhost:5173](http://localhost:5173) in your browser to ac
 User Query → Independent Analysis (10 Agents) → Cross-Review →
 Critique & Debate → Iterative Improvement → Consensus Engine → CEO Summary → User
 ```
+
+## Changelog
+
+### v1.2.0 - 2026-08-20
+- Standardized environment configuration and documentation.
+- Enhanced live SSE streaming for faster agent state updates.
+- Refined cross-review and critique workflow logic.
 
 ## License
 
