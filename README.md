@@ -4,15 +4,20 @@
 
 [![Java 21](https://img.shields.io/badge/Java-21-orange.svg)]()
 [![React 19](https://img.shields.io/badge/React-19-blue.svg)]()
+[![Spring Boot 3.4](https://img.shields.io/badge/Spring%20Boot-3.4-brightgreen.svg)]()
 [![PostgreSQL 16](https://img.shields.io/badge/PostgreSQL-16-blue.svg)]()
 [![License: Private](https://img.shields.io/badge/license-private-red.svg)]()
 
+## Overview
+
+Synapse Council simulates an executive boardroom where specialized AI agents analyze user queries. Each agent provides a distinct domain perspective, followed by a structured debate, cross-review, and critique phase. Once the agents reach a consensus, the CEO agent synthesizes the final output for the user.
+
 ## Features
 
-- **Multi-Agent Collaboration**: 10 specialized AI agents act as an executive board, each providing a distinct domain perspective.
-- **Structured Debate Workflow**: Agents think independently, cross-review each other's input, critique, and iterate before reaching consensus.
-- **Live Streaming**: Real-time agent interactions streamed via WebSocket and Server-Sent Events (SSE).
-- **Visual Graphs**: Interactive agent relationship and workflow mapping using React Flow.
+- **Multi-Agent Collaboration**: 10 AI agents act as an executive board, each contributing a distinct domain perspective.
+- **Structured Debate Workflow**: Agents analyze independently, cross-review each other's input, critique, and iterate before reaching consensus.
+- **Real-Time Streaming**: Live agent interactions streamed via WebSocket and Server-Sent Events (SSE).
+- **Interactive Graphs**: Agent relationships and workflow mappings visualized using React Flow.
 
 ## Architecture
 
@@ -48,7 +53,7 @@ cp backend/.env.example backend/.env
 
 ### 3. Run the Backend
 
-Start the Spring Boot server. Ensure you are in the `backend` directory:
+Start the Spring Boot server from the `backend` directory:
 
 ```bash
 cd backend
@@ -93,7 +98,7 @@ Critique & Debate → Iterative Improvement → Consensus Engine → CEO Summary
 
 ## Changelog
 
-### v1.2.0 - 2026-08-20
+### v1.2.0 - 2026-08-21
 - Standardized environment configuration and documentation.
 - Enhanced live SSE streaming for faster agent state updates.
 - Refined cross-review and critique workflow logic.
