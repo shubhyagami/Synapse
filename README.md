@@ -27,7 +27,7 @@
 
 ## Getting Started
 
-The project is divided into three main components: infrastructure (databases/queue), backend (Spring Boot), and frontend (React). Ensure you have Docker, Java 21, and Node.js installed before proceeding.
+The project consists of three main components: infrastructure (databases and queues), backend (Spring Boot), and frontend (React). Ensure you have Docker, Java 21, and Node.js installed before proceeding.
 
 ### 1. Start Infrastructure
 
