@@ -1,6 +1,4 @@
-# Synapse Council
-
-> A multi-agent AI boardroom platform where 10 specialized AI experts collaborate, debate, critique, and reach consensus before answering.
+# Synapse Council: A Multi-Agent AI Boardroom Platform
 
 [![Java 21](https://img.shields.io/badge/Java-21-orange.svg)]()
 [![React 19](https://img.shields.io/badge/React-19-blue.svg)]()
@@ -10,16 +8,20 @@
 
 ## Overview
 
-Synapse Council simulates an executive boardroom where specialized AI agents analyze user queries. Each agent provides a distinct domain perspective, followed by a structured debate, cross-review, and critique phase. Once the agents reach a consensus, the CEO agent synthesizes the final output for the user.
+Synapse Council is an innovative multi-agent AI platform that simulates an executive boardroom where specialized AI agents collaborate, debate, and reach consensus on user queries. This platform consists of 10 AI agents, each providing a distinct domain perspective, and a structured debate workflow that ensures efficient and informed decision-making.
 
 ## Features
 
-- **Multi-Agent Collaboration**: 10 AI agents act as an executive board, each contributing a distinct domain perspective.
-- **Structured Debate Workflow**: Agents analyze independently, cross-review each other's input, critique, and iterate before reaching consensus.
-- **Real-Time Streaming**: Live agent interactions streamed via WebSocket and Server-Sent Events (SSE).
-- **Interactive Graphs**: Agent relationships and workflow mappings visualized using React Flow.
+### Key Benefits
+
+* **Multi-Agent Collaboration**: 10 AI agents work together as an executive board, each contributing unique domain expertise.
+* **Structured Debate Workflow**: Agents conduct independent analysis, cross-review, critique, and iterate before achieving consensus.
+* **Real-Time Streaming**: Live agent interactions are streamed via WebSocket and Server-Sent Events (SSE).
+* **Interactive Graphs**: Agent relationships and workflow mappings are visualized using React Flow.
 
 ## Architecture
+
+Our platform utilizes a robust tech stack, consisting of:
 
 | Layer | Tech Stack |
 |-------|------------|
@@ -32,49 +34,41 @@ Synapse Council simulates an executive boardroom where specialized AI agents ana
 
 ## Getting Started
 
-The project consists of three main components: infrastructure (databases and queues), backend (Spring Boot), and frontend (React). Ensure you have Docker, Java 21, and Node.js installed before proceeding.
+### Prerequisites
 
-### 1. Start Infrastructure
+Before you begin, ensure you have Docker, Java 21, and Node.js installed on your system.
 
-Spin up the required databases and storage services using Docker Compose:
+### Setup Instructions
 
+1. **Start Infrastructure**: Spin up the required databases and storage services using Docker Compose:
 ```bash
 docker compose up -d
 ```
 
-### 2. Configure Environment Variables
-
-Copy the example environment file and add your NVIDIA NIM API keys:
-
+2. **Configure Environment Variables**: Copy the example environment file and add your NVIDIA NIM API keys:
 ```bash
 cp backend/.env.example backend/.env
 # Edit backend/.env with your credentials
 ```
 
-### 3. Run the Backend
-
-Start the Spring Boot server from the `backend` directory:
-
+3. **Run the Backend**: Start the Spring Boot server from the `backend` directory:
 ```bash
 cd backend
 mvn spring-boot:run
 ```
 
-### 4. Run the Frontend
-
-Install dependencies and start the development server:
-
+4. **Run the Frontend**: Install dependencies and start the development server:
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
 
-### 5. View the Application
-
-Navigate to [http://localhost:5173](http://localhost:5173) in your browser to access the platform.
+5. **View the Application**: Navigate to [http://localhost:5173](http://localhost:5173) in your browser to access the platform.
 
 ## AI Board Members
+
+Our AI board consists of 10 highly skilled agents, each with a unique role and expertise.
 
 | Agent | Role | Model |
 |-------|------|-------|
@@ -91,6 +85,8 @@ Navigate to [http://localhost:5173](http://localhost:5173) in your browser to ac
 
 ## Discussion Workflow
 
+Our discussion workflow is designed to facilitate efficient and informed decision-making.
+
 ```text
 User Query → Independent Analysis (10 Agents) → Cross-Review →
 Critique & Debate → Iterative Improvement → Consensus Engine → CEO Summary → User
@@ -98,10 +94,11 @@ Critique & Debate → Iterative Improvement → Consensus Engine → CEO Summary
 
 ## Changelog
 
-### v1.2.0 - 2026-08-21
-- Standardized environment configuration and documentation.
-- Enhanced live SSE streaming for faster agent state updates.
-- Refined cross-review and critique workflow logic.
+### Latest Release (v1.2.0) - 2026-08-21
+
+*   Standardized environment configuration and documentation.
+*   Enhanced live SSE streaming for faster agent state updates.
+*   Refined cross-review and critique workflow logic.
 
 ## License
 
