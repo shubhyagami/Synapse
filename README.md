@@ -9,13 +9,13 @@
 
 ## Overview
 
-The Synapse Council is an innovative, open-source multi-agent AI platform that simulates an executive boardroom where specialized AI agents collaborate, debate, and reach consensus on user queries. This platform consists of 10 AI agents, each providing a distinct domain perspective, and a structured debate workflow that ensures efficient and informed decision-making.
+The Synapse Council is an open-source, multi-agent AI platform that simulates an executive boardroom. Our system allows AI agents to collaborate, debate, and reach consensus on user queries. This platform consists of 10 AI agents, each with a unique domain expertise, and a structured debate workflow that ensures efficient and informed decision-making.
 
 ## Features
 
 ### Core Capabilities
 
-*   **Multi-Agent Collaboration**: 10 AI agents work together as an executive board, each contributing unique domain expertise.
+*   **Multi-Agent Collaboration**: 10 AI agents collaborate as an executive board, each contributing unique domain expertise.
 *   **Structured Debate Workflow**: Agents conduct independent analysis, cross-review, critique, and iterate before achieving consensus.
 *   **Real-Time Streaming**: Live agent interactions are streamed via WebSocket and Server-Sent Events (SSE).
 
@@ -95,7 +95,7 @@ Critique & Debate → Iterative Improvement → Consensus Engine → CEO Summary
 
 ## Changelog
 
-### Latest Release (v1.2.0) - 2026-08-21
+### v1.2.0 (2026-08-21)
 
 *   Standardized environment configuration and documentation.
 *   Enhanced live SSE streaming for faster agent state updates.
