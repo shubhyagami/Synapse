@@ -1,29 +1,29 @@
 # Synapse Council: A Multi‑Agent AI Boardroom Platform  
 
-[![Java 21](https://img.shields.io/badge/Java-21-orange.svg)](https://adoptium.net)  
-[![React 19](https://img.shields.io/badge/React-19-blue.svg)](https://reactjs.org)  
-[![Spring Boot 3.4](https://img.shields.io/badge/Spring%20Boot-3.4-brightgreen.svg)](https://spring.io)  
-[![PostgreSQL 16](https://img.shields.io/badge/PostgreSQL-16-blue.svg)](https://www.postgresql.org)  
+[![Java 21](https://img.shields.io/badge/Java-21-orange.svg)](https://adoptium.net)  
+[![React 19](https://img.shields.io/badge/React-19-blue.svg)](https://reactjs.org)  
+[![Spring Boot 3.4](https://img.shields.io/badge/Spring%20Boot-3.4-brightgreen.svg)](https://spring.io)  
+[![PostgreSQL 16](https://img.shields.io/badge/PostgreSQL-16-blue.svg)](https://www.postgresql.org)  
 [![License: Private](https://img.shields.io/badge/license-private-red.svg)](LICENSE)  
 
 ---
 
 ## Overview  
 
-Synapse Council is an open‑source platform that simulates an executive boardroom using ten specialized AI agents. The agents collaborate, debate, and reach consensus on user‑provided queries, delivering structured, reasoned responses.
+Synapse Council is an open‑source platform that simulates an executive boardroom using ten specialized AI agents. Each agent contributes domain‑specific insights, followed by cross‑review, critique, and iterative refinement until a consensus is reached, delivering structured, reasoned responses to user‑provided queries.
 
 ---
 
 ## Features  
 
 ### Core Capabilities  
-- **Multi‑Agent Collaboration** – Ten AI agents act as an executive board, each with a distinct domain expertise.  
+- **Multi‑Agent Collaboration** – Ten AI agents act as an executive board, each with a distinct area of expertise.  
 - **Structured Debate Workflow** – Independent analysis → cross‑review → critique → iterative refinement → consensus.  
 - **Real‑Time Streaming** – Live interaction visualised via WebSocket and Server‑Sent Events (SSE).  
 
 ### User Benefits  
 - Interactive visualisations of agent relationships and workflow with **React Flow**.  
-- Enhanced decision quality through asynchronous, agent‑driven debate.  
+- Improved decision quality through asynchronous, agent‑driven debate.  
 
 ---
 
@@ -44,7 +44,7 @@ Synapse Council is an open‑source platform that simulates an executive boardro
 
 ### Prerequisites  
 - Docker  
-- Java 21 (or JDK 21)  
+- Java 21 (or JDK 21)  
 - Node.js (v20+)  
 
 ### Setup  
@@ -108,9 +108,9 @@ CEO Summary → User
 ## Changelog  
 
 ### v1.2.0 (2026‑08‑21)  
-- Standardised environment configuration and documentation.  
-- Improved live SSE streaming for faster state updates.  
-- Refined cross‑review and critique logic.
+- Added standardized environment configuration and improved documentation.  
+- Enhanced live SSE streaming for faster state updates.  
+- Refined cross‑review and critique logic for more consistent consensus.  
 
 ---
 
