@@ -14,16 +14,12 @@ Synapse Council is an open‑source platform that simulates an executive boardro
 
 ---  
 
-## Features  
+## Core Features  
 
-**Core capabilities**  
 - **Multi‑Agent Collaboration** – Ten AI agents act as an executive board, each with a distinct area of expertise.  
 - **Structured Debate Workflow** – Independent analysis → cross‑review → critique → iterative refinement → consensus.  
-- **Real‑Time Streaming** – Live interaction visualised via WebSocket and Server‑Sent Events (SSE).  
-
-**User benefits**  
-- Interactive visualisations of agent relationships and workflow using **React Flow**.  
-- Improved decision quality through asynchronous, agent‑driven debate.  
+- **Real‑Time Interaction** – Live updates via WebSocket and Server‑Sent Events (SSE).  
+- **Visual Workflow** – Interactive diagrams of agent relationships and processes built with **React Flow**.  
 
 ---  
 
@@ -44,17 +40,17 @@ Synapse Council is an open‑source platform that simulates an executive boardro
 
 ### Prerequisites  
 - Docker  
-- Java 21 (or JDK 21)  
+- Java 21 (or JDK 21)  
 - Node.js (v20+)  
 
 ### Setup  
 
-1. **Start services**  
+1. **Start all services**  
    ```bash
    docker compose up -d
    ```  
 
-2. **Configure environment**  
+2. **Configure environment variables**  
    ```bash
    cp backend/.env.example backend/.env
    # Edit backend/.env and add your NVIDIA NIM API keys
@@ -73,8 +69,8 @@ Synapse Council is an open‑source platform that simulates an executive boardro
    npm run dev
    ```  
 
-5. **Open the app**  
-   Navigate to <http://localhost:5173>.  
+5. **Open the application**  
+   Visit <http://localhost:5173> in your browser.  
 
 ---  
 
