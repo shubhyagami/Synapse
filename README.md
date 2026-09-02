@@ -1,4 +1,10 @@
-# Synapse Council – Multi‑Agent AI Boardroom Platform
+# Synapse – AI‑Powered Boardroom Simulation
+
+> A lightweight, open‑source platform that lets ten autonomous agents play the roles of an executive board. Each agent analyzes a user prompt, cross‑checks the others, debates, and refines the answer until the “CEO” delivers a consensus reply.
+
+---
+
+## Badges
 
 [![Java 21](https://img.shields.io/badge/Java-21-orange.svg)](https://adoptium.net)  
 [![Spring Boot 3.4](https://img.shields.io/badge/Spring%20Boot-3.4-brightgreen.svg)](https://spring.io)  
@@ -9,20 +15,16 @@
 
 ---
 
-## Overview
+## Table of Contents
 
-Synapse Council is a lightweight, open‑source platform that simulates an executive boardroom. Ten independent AI agents each assume a distinct board role, analyze user prompts, cross‑review each other’s outputs, debate, and refine until a single, consensus answer is produced. The final reply is provided by the “CEO” agent to the user.
-
----
-
-## Core Features
-
-- **Ten specialized agents** – CEO, Product Manager, Security Engineer, etc.  
-- **Structured debate workflow** – independent analysis, cross‑review, critique, iterative refinement, consensus, CEO summary.  
-- **Real‑time UI updates** – WebSocket and Server‑Sent Events (SSE).  
-- **Visual workflow diagram** – React Flow shows agent interactions.  
-- **Docker‑based** – easy to spin up the full stack with a single command.  
-- **Modular architecture** – Spring Boot backend, React frontend, PostgreSQL, Redis, Qdrant, MinIO.
+- [Architecture](#architecture)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Quick Start](#quick-start)
+- [AI Board Members](#ai-board-members)
+- [Discussion Workflow](#discussion-workflow)
+- [Changelog](#changelog)
+- [License](#license)
 
 ---
 
@@ -30,12 +32,14 @@ Synapse Council is a lightweight, open‑source platform that simulates an execu
 
 | Layer | Technology |
 |-------|------------|
-| **Frontend** | React 19, TypeScript, TailwindCSS 4, Framer Motion, React Flow |
-| **Backend** | Spring Boot 3.4, Java 21, WebSocket, SSE |
-| **AI** | NVIDIA NIM – 10 independent models |
-| **Database** | PostgreSQL 16, Redis 7, Qdrant 1.9 |
+| **Frontend** | React 19, TypeScript, Tailwind CSS, Framer Motion, React Flow |
+| **Backend** | Spring Boot 3.4, Java 21, WebSocket, SSE |
+| **AI** | NVIDIA NIM – 10 distinct models |
+| **Databases** | PostgreSQL 16, Redis 7, Qdrant 1.9 |
 | **Storage** | MinIO |
-| **Orchestration** | Docker Compose |
+| **Orchestration** | Docker Compose |
+
+The backend exposes a WebSocket and SSE endpoint for real‑time updates. The frontend visualises the debate graph with React Flow and shows agent messages as they are produced.
 
 ---
 
@@ -43,10 +47,12 @@ Synapse Council is a lightweight, open‑source platform that simulates an execu
 
 ### Prerequisites
 
-- Docker (20.10+)
-- Docker Compose (v2)
-- Java 21 (JDK 21)
-- Node.js 20+ (npm or yarn)
+- **Docker** (20.10 +)
+- **Docker Compose** (v2)
+- **Java 21** (JDK 21)
+- **Node.js** (20 + npm or yarn)
+
+> **Tip:** The included Docker compose file runs the whole stack, but you can also run the backend and frontend separately (see the section below).
 
 ### Quick Start
 
@@ -55,25 +61,25 @@ Synapse Council is a lightweight, open‑source platform that simulates an execu
 git clone https://github.com/shubhyagami/synapse.git
 cd synapse
 
-# 2. Start all services in the background
+# 2. Start all services
 docker compose up -d
 
 # 3. Configure environment variables
-# Copy the example and fill in your NVIDIA NIM API key
+#   Copy the example and add your NVIDIA NIM keys
 cp backend/.env.example backend/.env
-# Edit backend/.env and add your NVIDIA NIM keys
+nano backend/.env   # or your editor of choice
 
-# 4. Run the backend
+# 4. (Optional) Run the backend directly
 cd backend
-mvn spring-boot:run   # or use ./mvnw spring-boot:run if you prefer
+./mvnw spring-boot:run   # uses the wrapper script
 
-# 5. Install and run the frontend
+# 5. (Optional) Run the frontend directly
 cd ../frontend
 npm install
 npm run dev
 ```
 
-Open <http://localhost:5173> in your browser to see the boardroom in action.
+Open <http://localhost:5173> to see the boardroom in action.
 
 ---
 
@@ -96,7 +102,7 @@ Open <http://localhost:5173> in your browser to see the boardroom in action.
 
 ## Discussion Workflow
 
-```text
+```
 User query
    ↓
 Independent analysis (10 agents)
@@ -112,20 +118,21 @@ Consensus engine
 CEO summary → User
 ```
 
+The workflow is implemented as a series of asynchronous Spring tasks. The frontend subscribes to updates via WebSocket, displaying each agent’s contribution as it arrives.
+
 ---
 
 ## Changelog
 
 ### v1.2.0 – 2026‑08‑21
-* Standardized environment configuration
-* Added SSE streaming for faster state updates
-* Refined cross‑review and critique logic to improve consensus consistency
+
+- Standardized environment configuration
+- Added SSE streaming for faster state updates
+- Refined cross‑review and critique logic to improve consensus consistency
 
 ---
 
 ## License
 
-Synapse is distributed under a private license. All rights reserved.  
+Synapse is distributed under a **private license**. All rights reserved.  
 See the [LICENSE](LICENSE) file for details.
-
----
