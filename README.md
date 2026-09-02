@@ -1,80 +1,88 @@
-# Synapse Council: Multi‑Agent AI Boardroom Platform  
+# Synapse Council – Multi‑Agent AI Boardroom Platform
 
 [![Java 21](https://img.shields.io/badge/Java-21-orange.svg)](https://adoptium.net)  
-[![React 19](https://img.shields.io/badge/React-19-blue.svg)](https://reactjs.org)  
 [![Spring Boot 3.4](https://img.shields.io/badge/Spring%20Boot-3.4-brightgreen.svg)](https://spring.io)  
+[![React 19](https://img.shields.io/badge/React-19-blue.svg)](https://reactjs.org)  
 [![PostgreSQL 16](https://img.shields.io/badge/PostgreSQL-16-blue.svg)](https://www.postgresql.org)  
-[![License: Private](https://img.shields.io/badge/license-private-red.svg)](LICENSE)  
+[![Docker Compose](https://img.shields.io/badge/Docker-Compose-0db7ed.svg)](https://docs.docker.com/compose/)  
+[![License: Private](https://img.shields.io/badge/license-private-red.svg)](LICENSE)
 
----  
+---
 
-## Overview  
+## Overview
 
-Synapse Council is an open‑source platform that simulates an executive boardroom using ten specialized AI agents. Each agent contributes domain‑specific insights, followed by cross‑review, critique, and iterative refinement until a consensus is reached, delivering structured, reasoned responses to user‑provided queries.  
+Synapse Council is a private, open‑source framework that emulates an executive boardroom. Ten specialized AI agents provide domain‑specific insights, then engage in structured cross‑review, critique, and iterative refinement until a consensus is reached. The result is a single, well‑reasoned response to any user query.
 
----  
+---
 
-## Core Features  
+## Core Features
 
-- **Multi‑Agent Collaboration** – Ten AI agents act as an executive board, each with a distinct area of expertise.  
-- **Structured Debate Workflow** – Independent analysis → cross‑review → critique → iterative refinement → consensus.  
-- **Real‑Time Interaction** – Live updates via WebSocket and Server‑Sent Events (SSE).  
-- **Visual Workflow** – Interactive diagrams of agent relationships and processes built with **React Flow**.  
+- **Ten AI Agents** – each representing a distinct board role (e.g., CEO, Product Manager, Security Engineer).  
+- **Structured Debate Workflow** –  
+  1. Independent analysis of the user prompt.  
+  2. Cross‑review among agents.  
+  3. Critique & debate.  
+  4. Iterative improvement.  
+  5. Consensus engine.  
+  6. CEO summary.  
+- **Real‑Time Interaction** – WebSocket and Server‑Sent Events (SSE) keep the UI updated without polling.  
+- **Visual Workflow** – React Flow diagrams show agent relationships and message flow.  
+- **Modular Architecture** – Docker Compose orchestrates the full stack: Spring Boot backend, React frontend, PostgreSQL, Redis, Qdrant, MinIO.
 
----  
+---
 
-## Architecture  
+## Architecture
 
-| Layer      | Technologies |
-|------------|--------------|
-| **Frontend** | React 19, TypeScript, TailwindCSS v4, Framer Motion, React Flow |
-| **Backend**  | Spring Boot 3.4, Java 21, WebSocket, SSE |
-| **AI**       | NVIDIA NIM (10 independent models) |
+| Layer | Tech Stack |
+|-------|------------|
+| **Frontend** | React 19, TypeScript, TailwindCSS 4, Framer Motion, React Flow |
+| **Backend** | Spring Boot 3.4, Java 21, WebSocket, SSE |
+| **AI** | NVIDIA NIM – 10 independent models |
 | **Database** | PostgreSQL 16, Redis 7, Qdrant 1.9 |
-| **Storage**  | MinIO |
-| **Infra**    | Docker Compose |
+| **Storage** | MinIO |
+| **Infrastructure** | Docker Compose |
 
----  
+---
 
-## Getting Started  
+## Getting Started
 
-### Prerequisites  
-- Docker  
-- Java 21 (or JDK 21)  
-- Node.js (v20+)  
+### Prerequisites
 
-### Setup  
+```
+Docker
+Java 21 (or JDK 21)
+Node.js 20+
+```
 
-1. **Start all services**  
-   ```bash
-   docker compose up -d
-   ```  
+### Quick Start
 
-2. **Configure environment variables**  
-   ```bash
-   cp backend/.env.example backend/.env
-   # Edit backend/.env and add your NVIDIA NIM API keys
-   ```  
+```bash
+# 1. Pull the repo
+git clone https://github.com/shubhyagami/synapse.git
+cd synapse
 
-3. **Run the backend**  
-   ```bash
-   cd backend
-   mvn spring-boot:run
-   ```  
+# 2. Start all services
+docker compose up -d
 
-4. **Run the frontend**  
-   ```bash
-   cd frontend
-   npm install
-   npm run dev
-   ```  
+# 3. Configure environment variables
+cp backend/.env.example backend/.env
+# Edit backend/.env and add your NVIDIA NIM API keys
 
-5. **Open the application**  
-   Visit <http://localhost:5173> in your browser.  
+# 4. Build and run the backend
+cd backend
+mvn spring-boot:run
 
----  
+# 5. Install and run the frontend
+cd ../frontend
+npm install
+npm run dev
+```
 
-## AI Board Members  
+Open your browser at <http://localhost:5173>.
+
+---
+
+## AI Board Members
 
 | Agent | Role | Model |
 |-------|------|-------|
@@ -89,31 +97,38 @@ Synapse Council is an open‑source platform that simulates an executive boardro
 | Aisha Patel | Customer Analyst | moonshotai/kimi‑k2.6 |
 | Emma Lindström | UI/UX Designer | google/gemma‑4‑31b‑it |
 
----  
+---
 
-## Discussion Workflow  
+## Discussion Workflow
 
 ```
-User Query → Independent Analysis (10 Agents) → Cross‑Review → 
-Critique & Debate → Iterative Improvement → Consensus Engine → 
-CEO Summary → User
-```  
+User query
+   ↓
+Independent analysis (10 agents)
+   ↓
+Cross‑review
+   ↓
+Critique & debate
+   ↓
+Iterative improvement
+   ↓
+Consensus engine
+   ↓
+CEO summary → User
+```
 
----  
+---
 
-## Changelog  
+## Changelog
 
-### v1.2.0 (2026‑08‑21)  
-- Added standardized environment configuration and clarified documentation.  
-- Enhanced live SSE streaming for faster state updates.  
-- Refined cross‑review and critique logic to produce more consistent consensus.  
+### v1.2.0 – 2026‑08‑21
 
----  
+- Standardized environment configuration.  
+- Added SSE streaming for faster state updates.  
+- Refined cross‑review and critique logic to improve consensus consistency.
 
-## License  
+---
 
-Private — All rights reserved.  
+## License
 
----  
-
-*This README has been edited for clarity, correctness, and developer usability.*
+Private – All rights reserved.
