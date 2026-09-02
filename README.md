@@ -11,36 +11,31 @@
 
 ## Overview
 
-Synapse Council is a private, open‑source framework that emulates an executive boardroom. Ten specialized AI agents provide domain‑specific insights, then engage in structured cross‑review, critique, and iterative refinement until a consensus is reached. The result is a single, well‑reasoned response to any user query.
+Synapse Council is a lightweight, open‑source platform that simulates an executive boardroom. Ten independent AI agents each assume a distinct board role, analyze user prompts, cross‑review each other’s outputs, debate, and refine until a single, consensus answer is produced. The final reply is provided by the “CEO” agent to the user.
 
 ---
 
 ## Core Features
 
-- **Ten AI Agents** – each representing a distinct board role (e.g., CEO, Product Manager, Security Engineer).  
-- **Structured Debate Workflow** –  
-  1. Independent analysis of the user prompt.  
-  2. Cross‑review among agents.  
-  3. Critique & debate.  
-  4. Iterative improvement.  
-  5. Consensus engine.  
-  6. CEO summary.  
-- **Real‑Time Interaction** – WebSocket and Server‑Sent Events (SSE) keep the UI updated without polling.  
-- **Visual Workflow** – React Flow diagrams show agent relationships and message flow.  
-- **Modular Architecture** – Docker Compose orchestrates the full stack: Spring Boot backend, React frontend, PostgreSQL, Redis, Qdrant, MinIO.
+- **Ten specialized agents** – CEO, Product Manager, Security Engineer, etc.  
+- **Structured debate workflow** – independent analysis, cross‑review, critique, iterative refinement, consensus, CEO summary.  
+- **Real‑time UI updates** – WebSocket and Server‑Sent Events (SSE).  
+- **Visual workflow diagram** – React Flow shows agent interactions.  
+- **Docker‑based** – easy to spin up the full stack with a single command.  
+- **Modular architecture** – Spring Boot backend, React frontend, PostgreSQL, Redis, Qdrant, MinIO.
 
 ---
 
 ## Architecture
 
-| Layer | Tech Stack |
+| Layer | Technology |
 |-------|------------|
 | **Frontend** | React 19, TypeScript, TailwindCSS 4, Framer Motion, React Flow |
 | **Backend** | Spring Boot 3.4, Java 21, WebSocket, SSE |
 | **AI** | NVIDIA NIM – 10 independent models |
 | **Database** | PostgreSQL 16, Redis 7, Qdrant 1.9 |
 | **Storage** | MinIO |
-| **Infrastructure** | Docker Compose |
+| **Orchestration** | Docker Compose |
 
 ---
 
@@ -48,29 +43,29 @@ Synapse Council is a private, open‑source framework that emulates an executive
 
 ### Prerequisites
 
-```
-Docker
-Java 21 (or JDK 21)
-Node.js 20+
-```
+- Docker (20.10+)
+- Docker Compose (v2)
+- Java 21 (JDK 21)
+- Node.js 20+ (npm or yarn)
 
 ### Quick Start
 
 ```bash
-# 1. Pull the repo
+# 1. Clone the repository
 git clone https://github.com/shubhyagami/synapse.git
 cd synapse
 
-# 2. Start all services
+# 2. Start all services in the background
 docker compose up -d
 
 # 3. Configure environment variables
+# Copy the example and fill in your NVIDIA NIM API key
 cp backend/.env.example backend/.env
-# Edit backend/.env and add your NVIDIA NIM API keys
+# Edit backend/.env and add your NVIDIA NIM keys
 
-# 4. Build and run the backend
+# 4. Run the backend
 cd backend
-mvn spring-boot:run
+mvn spring-boot:run   # or use ./mvnw spring-boot:run if you prefer
 
 # 5. Install and run the frontend
 cd ../frontend
@@ -78,7 +73,7 @@ npm install
 npm run dev
 ```
 
-Open your browser at <http://localhost:5173>.
+Open <http://localhost:5173> in your browser to see the boardroom in action.
 
 ---
 
@@ -101,7 +96,7 @@ Open your browser at <http://localhost:5173>.
 
 ## Discussion Workflow
 
-```
+```text
 User query
    ↓
 Independent analysis (10 agents)
@@ -122,13 +117,15 @@ CEO summary → User
 ## Changelog
 
 ### v1.2.0 – 2026‑08‑21
-
-- Standardized environment configuration.  
-- Added SSE streaming for faster state updates.  
-- Refined cross‑review and critique logic to improve consensus consistency.
+* Standardized environment configuration
+* Added SSE streaming for faster state updates
+* Refined cross‑review and critique logic to improve consensus consistency
 
 ---
 
 ## License
 
-Private – All rights reserved.
+Synapse is distributed under a private license. All rights reserved.  
+See the [LICENSE](LICENSE) file for details.
+
+---
