@@ -1,64 +1,68 @@
 # Synapse – AI‑Powered Boardroom Simulation
 
-**Synapse** is a lightweight, open‑source platform that lets ten autonomous agents play the roles of an executive board. Each agent analyzes a user prompt, cross‑checks the others, debates, and refines the answer until the “CEO” delivers a consensus reply.
+**Synapse** is a lightweight, open‑source platform that lets ten autonomous agents play an executive board.  
+Each agent analyzes a user prompt, cross‑checks the others, debates, and refines the answer until the “CEO” delivers a consensus reply.
 
 ---
 
-## 🚦 Build & CI
+## 🚦 Status
 
-[![Build](https://github.com/shubhyagami/synapse/actions/workflows/build.yml/badge.svg)](https://github.com/shubhyagami/synapse/actions)
-[![Test](https://github.com/shubhyagami/synapse/actions/workflows/test.yml/badge.svg)](https://github.com/shubhyagami/synapse/actions)
-[![Coverage](https://coveralls.io/repos/github/shubhyagami/synapse/badge.svg?branch=main)](https://coveralls.io/github/shubhyagami/synapse)
-[![License](https://img.shields.io/badge/license-private-red.svg)](LICENSE)
+![Build](https://github.com/shubhyagami/synapse/actions/workflows/build.yml/badge.svg)  
+![Test](https://github.com/shubhyagami/synapse/actions/workflows/test.yml/badge.svg)  
+![Coverage](https://coveralls.io/repos/github/shubhyagami/synapse/badge.svg?branch=main)  
+![License](https://img.shields.io/badge/license-private-red.svg)
 
 ---
 
 ## 📚 Table of Contents
 
-- [Getting Started](#getting-started)
+- [Quick Start](#quick-start)
 - [Architecture](#architecture)
 - [Installation](#installation)
   - [Prerequisites](#prerequisites)
-  - [Quick Start](#quick-start)
+  - [Running the Full Stack](#running-the-full-stack)
+  - [Running Services Separately](#running-services-separately)
   - [Environment Variables](#environment-variables)
-  - [Running Components Separately](#running-components-separately)
-- [AI Board Members](#ai-board-members)
-- [Discussion Workflow](#discussion-workflow)
+- [Agents](#agents)
+- [Workflow](#workflow)
 - [Features](#features)
 - [Changelog](#changelog)
 - [License](#license)
 
 ---
 
-## Getting Started
+## Quick Start
 
 ```bash
-# 1. Clone the repository
+# 1. Clone the repo
 git clone https://github.com/shubhyagami/synapse.git
 cd synapse
 
-# 2. Spin up the full stack with Docker Compose
+# 2. Spin up all services
 docker compose up -d
 
-# 3. Create and edit secrets
+# 3. Configure secrets
 cp backend/.env.example backend/.env
-nano backend/.env
+# Edit backend/.env with your NIM keys, DB, and storage credentials
+
+# 4. Open the UI
+open http://localhost:5173   # or visit in your browser
 ```
 
-Open <http://localhost:5173> to see the boardroom.
+If you prefer a local checkout, see the sections below for running the backend or frontend independently.
 
 ---
 
 ## Architecture
 
-| Layer | Technology | Purpose |
-|-------|------------|---------|
-| **Frontend** | React 19, TypeScript, Tailwind CSS, Framer Motion, React Flow | Visualises debate graphs, streams agent messages via WebSocket |
-| **Backend** | Spring Boot 3.4 (Java 21) | Provides REST, WebSocket, and SSE endpoints for real‑time collaboration |
-| **LLM Orchestration** | NVIDIA NIM (10 models) | Each agent runs a separate LLM instance |
-| **Data Store** | PostgreSQL 16, Redis 7, Qdrant 1.9 | Persists conversation state, caches, and vector search |
-| **Object Storage** | MinIO | Holds media attachments and logs |
-| **Deployment** | Docker Compose | Launches the entire stack with one command |
+| Layer | Tech | Purpose |
+|-------|------|---------|
+| **Frontend** | React 19, TypeScript, Tailwind, Framer Motion, React Flow | Visualises debate graphs and streams messages |
+| **Backend** | Spring Boot 3.4 (Java 21) | REST, WebSocket, and SSE endpoints |
+| **LLM Orchestration** | NVIDIA NIM (10 models) | Each agent drives a separate LLM |
+| **Data Store** | PostgreSQL 16, Redis 7, Qdrant 1.9 | Persist conversation state, cache, and vector search |
+| **Object Storage** | MinIO | Media attachments and logs |
+| **Deployment** | Docker Compose | One‑click launch of the entire stack |
 
 ---
 
@@ -66,45 +70,24 @@ Open <http://localhost:5173> to see the boardroom.
 
 ### Prerequisites
 
-| Tool | Minimum Version |
+| Tool | Minimum version |
 |------|-----------------|
 | Docker | 20.10+ |
 | Docker Compose | v2 |
 | Java JDK | 21 |
 | Node.js | 20+ (npm or yarn) |
 
-> **Tip**: The Docker Compose file contains all services. If you prefer running the frontend or backend locally, see the section below.
+> The `docker-compose.yml` file bundles all services. If you want to run components separately, see the “Running Services Separately” section.
 
-### Quick Start
+### Running the Full Stack
 
 ```bash
-# 1. Clone the repo
-git clone https://github.com/shubhyagami/synapse.git
-cd synapse
-
-# 2. Start the stack
 docker compose up -d
-
-# 3. Configure secrets
-cp backend/.env.example backend/.env
-nano backend/.env
 ```
 
-### Environment Variables
+The stack starts in the background. The backend will be reachable on port `8080`, the frontend on `5173`.
 
-| Variable | Description |
-|----------|-------------|
-| `NVIDIA_NIM_API_KEY_1` … `NVIDIA_NIM_API_KEY_10` | API keys for up to ten NIM models |
-| `DB_URL` | PostgreSQL JDBC URL |
-| `REDIS_URL` | Redis connection string |
-| `QDRANT_URL` | Qdrant endpoint |
-| `MINIO_ENDPOINT` | MinIO URL |
-| `MINIO_ACCESS_KEY` | MinIO access key |
-| `MINIO_SECRET_KEY` | MinIO secret key |
-
-Rename `backend/.env.example` to `.env` and fill in the placeholders.
-
-### Running Components Separately
+### Running Services Separately
 
 ```bash
 # Backend
@@ -117,14 +100,28 @@ npm install
 npm run dev
 ```
 
-Both services must be reachable on their default ports (`8080` for the backend, `5173` for the frontend). The UI will not load without a running backend.
+The UI connects to the backend at `http://localhost:8080`.
+
+### Environment Variables
+
+Rename `backend/.env.example` to `.env` and fill in the placeholders.
+
+| Variable | Description |
+|----------|-------------|
+| `NVIDIA_NIM_API_KEY_1` … `NVIDIA_NIM_API_KEY_10` | API keys for up to ten NIM models |
+| `DB_URL` | PostgreSQL JDBC URL (e.g. `postgres://user:pass@localhost:5432/synapse`) |
+| `REDIS_URL` | Redis connection string |
+| `QDRANT_URL` | Qdrant endpoint |
+| `MINIO_ENDPOINT` | MinIO URL (e.g. `http://minio:9000`) |
+| `MINIO_ACCESS_KEY` | MinIO access key |
+| `MINIO_SECRET_KEY` | MinIO secret key |
 
 ---
 
-## AI Board Members
+## Agents
 
-| Agent | Role | Model |
-|-------|------|-------|
+| Agent | Role | Base Model |
+|-------|------|------------|
 | Alexandra Chen | CEO | `z-ai/glm-5.2` |
 | Marcus Rivera | Product Manager | `z-ai/glm-5.2` |
 | Priya Sharma | Backend Engineer | `poolside/laguna-xs-2.1` |
@@ -136,11 +133,13 @@ Both services must be reachable on their default ports (`8080` for the backend, 
 | Aisha Patel | Customer Analyst | `moonshotai/kimi-k2.6` |
 | Emma Lindström | UI/UX Designer | `google/gemma-4-31b-it` |
 
+To add or replace an agent, update the `backend/.env` file with the desired model ID and restart the backend.
+
 ---
 
-## Discussion Workflow
+## Workflow
 
-```text
+```
 User query
    ↓
 Independent analysis (10 agents)
@@ -156,18 +155,18 @@ Consensus engine
 CEO summary → User
 ```
 
-The workflow is driven by Spring’s async tasks. The frontend subscribes via WebSocket and renders each contribution in real time.
+The backend drives the process with asynchronous tasks; the frontend subscribes via WebSocket and streams each contribution in real time.
 
 ---
 
 ## Features
 
-- **Real‑time collaboration** – SSE and WebSocket streams keep the UI live.
-- **Asynchronous agent execution** – Spring Boot’s task executor scales automatically.
-- **Vector search** – Qdrant powers quick similarity queries for long conversations.
-- **Extensible roles** – Add or replace agents by editing `backend/.env`.
-- **Secure storage** – MinIO for files, Redis for caching, PostgreSQL for persistence.
-- **One‑click launch** – Docker Compose brings the entire stack up with a single command.
+- Real‑time collaboration with SSE and WebSocket streams
+- Asynchronous execution using Spring Boot’s task executor
+- Vector search for long conversations with Qdrant
+- Extensible agent roles via environment configuration
+- Secure storage: Redis caching, PostgreSQL persistence, MinIO object store
+- One‑click launch with Docker Compose
 
 ---
 
@@ -175,9 +174,9 @@ The workflow is driven by Spring’s async tasks. The frontend subscribes via We
 
 ### v1.2.0 – 2026‑08‑21
 
-- Standardised environment configuration.
-- Added SSE streaming for faster UI updates.
-- Refined cross‑review logic to improve consensus accuracy.
+- Standardised environment configuration
+- Added SSE streaming for faster UI updates
+- Refined cross‑review logic to improve consensus accuracy
 
 ---
 
