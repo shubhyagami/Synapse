@@ -1,17 +1,14 @@
 # Synapse – AI‑Powered Boardroom Simulation
 
-**Synapse** is a lightweight, open‑source platform that lets ten autonomous agents act as a corporate board.  
-Each agent evaluates a user prompt, checks the others, engages in debate, and refines the response until the “CEO” delivers a consensus reply.
+**Synapse** is a lightweight, open‑source platform that lets ten autonomous agents act as a corporate board. Each agent independently evaluates a user prompt, cross‑reviews the other agents, engages in debate, and refines the response until the “CEO” delivers a consensus reply.
 
 ---
 
-## 🚦 Status
+## 🚦 Status / CI
 
-[![Build](https://github.com/shubhyagami/synapse/actions/workflows/build.yml/badge.svg)](https://github.com/shubhyagami/synapse/actions/workflows/build.yml)  
-[![Test](https://github.com/shubhyagami/synapse/actions/workflows/test.yml/badge.svg)](https://github.com/shubhyagami/synapse/actions/workflows/test.yml)  
-[![Coverage](https://coveralls.io/repos/github/shubhyagami/synapse/badge.svg?branch=main)](https://coveralls.io/github/shubhyagami/synapse?branch=main)  
-[![Docker Pulls](https://img.shields.io/docker/pulls/shubhyagami/synapse.svg)](https://hub.docker.com/r/shubhyagami/synapse)  
-[![License](https://img.shields.io/badge/license-private-red.svg)](LICENSE)
+| Build | Test | Coverage | Docker Pulls | License |
+|-------|------|---------|-------------|---------|
+| [![Build](https://github.com/shubhyagami/synapse/actions/workflows/build.yml/badge.svg)](https://github.com/shubhyagami/synapse/actions/workflows/build.yml) | [![Test](https://github.com/shubhyagami/synapse/actions/workflows/test.yml/badge.svg)](https://github.com/shubhyagami/synapse/actions/workflows/test.yml) | [![Coverage](https://coveralls.io/repos/github/shubhyagami/synapse/badge.svg?branch=main)](https://coveralls.io/github/shubhyagami/synapse?branch=main) | [![Docker Pulls](https://img.shields.io/docker/pulls/shubhyagami/synapse.svg)](https://hub.docker.com/r/shubhyagami/synapse) | [![License](https://img.shields.io/badge/license-private-red.svg)](LICENSE) |
 
 ---
 
@@ -21,7 +18,7 @@ Each agent evaluates a user prompt, checks the others, engages in debate, and re
 - [Architecture](#architecture)
 - [Installation](#installation)
   - [Prerequisites](#prerequisites)
-  - [Full‑Stack Docker](#full‑stack-docker)
+  - [Full‑stack Docker](#full‑stack-docker)
   - [Running Components Separately](#running-components-separately)
   - [Environment Variables](#environment-variables)
 - [Agents](#agents)
@@ -44,7 +41,7 @@ cd synapse
 # 2. Spin up all services
 docker compose up -d
 
-# 3. Configure secrets
+# 3. Prepare secrets
 cp backend/.env.example backend/.env
 # Edit backend/.env – add your NIM API keys, DB/Redis/Qdrant/MinIO credentials
 
@@ -52,7 +49,7 @@ cp backend/.env.example backend/.env
 open http://localhost:5173   # or navigate in your browser
 ```
 
-If you prefer a local checkout, see the sections beneath for running the backend or frontend separately.
+If you prefer to run components locally, see the sections below.
 
 ---
 
@@ -80,15 +77,16 @@ If you prefer a local checkout, see the sections beneath for running the backend
 | Java JDK | 21 |
 | Node.js | 20+ (npm or yarn) |
 
-> The `docker-compose.yml` bundles all services. For a more granular setup, see “Running Components Separately”.
+> The `docker-compose.yml` brings up all services. For a finer‑grained setup, see “Running Components Separately”.
 
-### Full‑Stack Docker
+### Full‑stack Docker
 
 ```bash
 docker compose up -d
 ```
 
-The backend runs on `localhost:8080` and the frontend on `localhost:5173`.
+> Backend → `localhost:8080`  
+> Frontend → `localhost:5173`
 
 ### Running Components Separately
 
@@ -103,11 +101,11 @@ npm install
 npm run dev
 ```
 
-The UI will connect to `http://localhost:8080` by default.
+> The UI connects to `http://localhost:8080` by default.
 
 ### Environment Variables
 
-Rename `backend/.env.example` to `.env` and replace the placeholders.
+Rename `backend/.env.example` to `backend/.env` and replace the placeholders.
 
 | Variable | Description |
 |----------|-------------|
@@ -123,7 +121,7 @@ Rename `backend/.env.example` to `.env` and replace the placeholders.
 
 ## Agents
 
-| Agent | Role | Base Model |
+| Agent | Role | Base model |
 |-------|------|------------|
 | Alexandra Chen | CEO | `z-ai/glm-5.2` |
 | Marcus Rivera | Product Manager | `z-ai/glm-5.2` |
@@ -136,7 +134,7 @@ Rename `backend/.env.example` to `.env` and replace the placeholders.
 | Aisha Patel | Customer Analyst | `moonshotai/kimi-k2.6` |
 | Emma Lindström | UI/UX Designer | `google/gemma-4-31b-it` |
 
-Add or replace an agent by updating the corresponding environment variable in `backend/.env` and restarting the backend.
+> Add or replace an agent by updating the corresponding environment variable in `backend/.env` and restarting the backend.
 
 ---
 
@@ -164,10 +162,10 @@ The backend orchestrates the process as asynchronous tasks; the frontend streams
 
 ## Features
 
-- Real‑time collaboration with SSE and WebSocket streams
+- Real‑time collaboration via SSE and WebSocket streams
 - Asynchronous execution using Spring Boot’s task executor
 - Vector search of long conversations with Qdrant
-- Extensible agent roles via environment variables
+- Extensible agent roles configurable through environment variables
 - Secure storage: Redis caching, PostgreSQL persistence, MinIO object store
 - One‑click launch with Docker Compose
 
