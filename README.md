@@ -1,16 +1,17 @@
 # Synapse – AI‑Powered Boardroom Simulation
 
-**Synapse** is a lightweight, open‑source platform that lets ten autonomous agents play an executive board.  
-Each agent analyzes a user prompt, cross‑checks the others, debates, and refines the answer until the “CEO” delivers a consensus reply.
+**Synapse** is a lightweight, open‑source platform that lets ten autonomous agents act as a corporate board.  
+Each agent evaluates a user prompt, checks the others, engages in debate, and refines the response until the “CEO” delivers a consensus reply.
 
 ---
 
 ## 🚦 Status
 
-![Build](https://github.com/shubhyagami/synapse/actions/workflows/build.yml/badge.svg)  
-![Test](https://github.com/shubhyagami/synapse/actions/workflows/test.yml/badge.svg)  
-![Coverage](https://coveralls.io/repos/github/shubhyagami/synapse/badge.svg?branch=main)  
-![License](https://img.shields.io/badge/license-private-red.svg)
+[![Build](https://github.com/shubhyagami/synapse/actions/workflows/build.yml/badge.svg)](https://github.com/shubhyagami/synapse/actions/workflows/build.yml)  
+[![Test](https://github.com/shubhyagami/synapse/actions/workflows/test.yml/badge.svg)](https://github.com/shubhyagami/synapse/actions/workflows/test.yml)  
+[![Coverage](https://coveralls.io/repos/github/shubhyagami/synapse/badge.svg?branch=main)](https://coveralls.io/github/shubhyagami/synapse?branch=main)  
+[![Docker Pulls](https://img.shields.io/docker/pulls/shubhyagami/synapse.svg)](https://hub.docker.com/r/shubhyagami/synapse)  
+[![License](https://img.shields.io/badge/license-private-red.svg)](LICENSE)
 
 ---
 
@@ -20,21 +21,23 @@ Each agent analyzes a user prompt, cross‑checks the others, debates, and refin
 - [Architecture](#architecture)
 - [Installation](#installation)
   - [Prerequisites](#prerequisites)
-  - [Running the Full Stack](#running-the-full-stack)
-  - [Running Services Separately](#running-services-separately)
+  - [Full‑Stack Docker](#full‑stack-docker)
+  - [Running Components Separately](#running-components-separately)
   - [Environment Variables](#environment-variables)
 - [Agents](#agents)
 - [Workflow](#workflow)
 - [Features](#features)
 - [Changelog](#changelog)
 - [License](#license)
+- [Contributing](#contributing)
+- [Questions](#questions)
 
 ---
 
 ## Quick Start
 
 ```bash
-# 1. Clone the repo
+# 1. Clone the repository
 git clone https://github.com/shubhyagami/synapse.git
 cd synapse
 
@@ -43,25 +46,25 @@ docker compose up -d
 
 # 3. Configure secrets
 cp backend/.env.example backend/.env
-# Edit backend/.env with your NIM keys, DB, and storage credentials
+# Edit backend/.env – add your NIM API keys, DB/Redis/Qdrant/MinIO credentials
 
 # 4. Open the UI
-open http://localhost:5173   # or visit in your browser
+open http://localhost:5173   # or navigate in your browser
 ```
 
-If you prefer a local checkout, see the sections below for running the backend or frontend independently.
+If you prefer a local checkout, see the sections beneath for running the backend or frontend separately.
 
 ---
 
 ## Architecture
 
-| Layer | Tech | Purpose |
-|-------|------|---------|
-| **Frontend** | React 19, TypeScript, Tailwind, Framer Motion, React Flow | Visualises debate graphs and streams messages |
+| Layer | Technology | Purpose |
+|-------|------------|---------|
+| **Frontend** | React 19, TypeScript, Tailwind CSS, Framer Motion, React Flow | Visualise debate graphs and stream messages |
 | **Backend** | Spring Boot 3.4 (Java 21) | REST, WebSocket, and SSE endpoints |
-| **LLM Orchestration** | NVIDIA NIM (10 models) | Each agent drives a separate LLM |
+| **LLM Orchestration** | NVIDIA NIM (10 models) | Each agent drives a distinct LLM |
 | **Data Store** | PostgreSQL 16, Redis 7, Qdrant 1.9 | Persist conversation state, cache, and vector search |
-| **Object Storage** | MinIO | Media attachments and logs |
+| **Object Storage** | MinIO | Store media attachments and logs |
 | **Deployment** | Docker Compose | One‑click launch of the entire stack |
 
 ---
@@ -77,17 +80,17 @@ If you prefer a local checkout, see the sections below for running the backend o
 | Java JDK | 21 |
 | Node.js | 20+ (npm or yarn) |
 
-> The `docker-compose.yml` file bundles all services. If you want to run components separately, see the “Running Services Separately” section.
+> The `docker-compose.yml` bundles all services. For a more granular setup, see “Running Components Separately”.
 
-### Running the Full Stack
+### Full‑Stack Docker
 
 ```bash
 docker compose up -d
 ```
 
-The stack starts in the background. The backend will be reachable on port `8080`, the frontend on `5173`.
+The backend runs on `localhost:8080` and the frontend on `localhost:5173`.
 
-### Running Services Separately
+### Running Components Separately
 
 ```bash
 # Backend
@@ -100,16 +103,16 @@ npm install
 npm run dev
 ```
 
-The UI connects to the backend at `http://localhost:8080`.
+The UI will connect to `http://localhost:8080` by default.
 
 ### Environment Variables
 
-Rename `backend/.env.example` to `.env` and fill in the placeholders.
+Rename `backend/.env.example` to `.env` and replace the placeholders.
 
 | Variable | Description |
 |----------|-------------|
 | `NVIDIA_NIM_API_KEY_1` … `NVIDIA_NIM_API_KEY_10` | API keys for up to ten NIM models |
-| `DB_URL` | PostgreSQL JDBC URL (e.g. `postgres://user:pass@localhost:5432/synapse`) |
+| `DB_URL` | PostgreSQL JDBC URL (e.g. `jdbc:postgresql://localhost:5432/synapse`) |
 | `REDIS_URL` | Redis connection string |
 | `QDRANT_URL` | Qdrant endpoint |
 | `MINIO_ENDPOINT` | MinIO URL (e.g. `http://minio:9000`) |
@@ -133,7 +136,7 @@ Rename `backend/.env.example` to `.env` and fill in the placeholders.
 | Aisha Patel | Customer Analyst | `moonshotai/kimi-k2.6` |
 | Emma Lindström | UI/UX Designer | `google/gemma-4-31b-it` |
 
-To add or replace an agent, update the `backend/.env` file with the desired model ID and restart the backend.
+Add or replace an agent by updating the corresponding environment variable in `backend/.env` and restarting the backend.
 
 ---
 
@@ -155,16 +158,16 @@ Consensus engine
 CEO summary → User
 ```
 
-The backend drives the process with asynchronous tasks; the frontend subscribes via WebSocket and streams each contribution in real time.
+The backend orchestrates the process as asynchronous tasks; the frontend streams each contribution in real time via WebSocket/SSE.
 
 ---
 
 ## Features
 
 - Real‑time collaboration with SSE and WebSocket streams
-- Asynchronous execution using Spring Boot’s task executor
-- Vector search for long conversations with Qdrant
-- Extensible agent roles via environment configuration
+- Asynchronous execution using Spring Boot’s task executor
+- Vector search of long conversations with Qdrant
+- Extensible agent roles via environment variables
 - Secure storage: Redis caching, PostgreSQL persistence, MinIO object store
 - One‑click launch with Docker Compose
 
@@ -184,3 +187,16 @@ The backend drives the process with asynchronous tasks; the frontend subscribes 
 
 Synapse is distributed under a **private license**. All rights reserved.  
 See the [LICENSE](LICENSE) file for details.
+
+---
+
+## Contributing
+
+Pull requests are welcome.  
+Please open an issue first if you have a feature idea or bug report.
+
+---
+
+## Questions
+
+For questions or support, open an issue on GitHub or email shubhyagami@example.com.
