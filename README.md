@@ -1,28 +1,31 @@
 # Synapse – AI‑Powered Boardroom Simulation
 
-Synapse is a lightweight, open‑source platform that simulates a corporate board of ten autonomous agents. Each agent evaluates a user prompt, cross‑reviews the others, engages in structured debate, and iteratively refines its output until the “CEO” delivers a consensus answer.
+Synapse is an open‑source platform that orchestrates an autonomous board of ten agents.  
+Each agent interprets a user query, cross‑examines its peers, engages in structured debate, and iteratively refines its output until the **CEO** synthesises a consensus answer.
 
-The stack is split into:
-- **Backend** – Java 21 Spring Boot 3.4
-- **Frontend** – Vite + React 18, TypeScript, Tailwind CSS, Framer Motion, React Flow
-- **LLM Orchestration** – NVIDIA NIM models
-- **Datastore** – PostgreSQL 16, Redis 7, Qdrant 1.9
-- **Object Store** – MinIO
+The stack is divided into the following layers:
 
-All services are packaged with Docker Compose for a one‑click install.
+| Layer | Technology | Purpose |
+|-------|-------------|---------|
+| **Backend** | Java 21, Spring Boot 3.4 | REST API, WebSocket/SSE, orchestration, task scheduling |
+| **Frontend** | Vite + React 18, TypeScript, Tailwind CSS, Framer Motion, React Flow | Visualises debate graphs and streams real‑time messages |
+| **LLM Orchestration** | NVIDIA NIM | Each agent drives a distinct large language model |
+| **Datastore** | PostgreSQL 16, Redis 7, Qdrant 1.9 | Persists conversation state, caches, and performs vector search |
+| **Object Store** | MinIO | Stores media attachments and logs |
+| **Deployment** | Docker Compose | One‑click launch of the entire stack |
 
 > **NOTE**  
-> Synapse is licensed under a private license. All rights reserved.
+> Synapse is distributed under a proprietary license. All rights reserved.
 
 ---
 
 ## Badges
 
-![Build](https://github.com/shubhyagami/synapse/actions/workflows/build.yml/badge.svg)
-![Test](https://github.com/shubhyagami/synapse/actions/workflows/test.yml/badge.svg)
-![Coverage](https://coveralls.io/repos/github/shubhyagami/synapse/badge.svg?branch=main)
-![Docker Pulls](https://img.shields.io/docker/pulls/shubhyagami/synapse.svg)
-![License](https://img.shields.io/badge/license-private-red.svg)
+[![Build](https://github.com/shubhyagami/synapse/actions/workflows/build.yml/badge.svg)](https://github.com/shubhyagami/synapse/actions)
+[![Test](https://github.com/shubhyagami/synapse/actions/workflows/test.yml/badge.svg)](https://github.com/shubhyagami/synapse/actions)
+[![Coverage](https://coveralls.io/repos/github/shubhyagami/synapse/badge.svg?branch=main)](https://coveralls.io/github/shubhyagami/synapse)
+[![Docker Pulls](https://img.shields.io/docker/pulls/shubhyagami/synapse.svg)](https://hub.docker.com/r/shubhyagami/synapse)
+[![License](https://img.shields.io/badge/license-proprietary-red.svg)](LICENSE)
 
 ---
 
@@ -44,12 +47,12 @@ docker compose up -d
 #    http://localhost:5173
 ```
 
-**Running Components Separately**
+### Running components separately
 
 ```bash
 # Backend
 cd backend
-./mvnw spring-boot:run   # JVM 21 required
+./mvnw spring-boot:run   # Requires Java 21
 
 # Frontend
 cd ../frontend
@@ -88,23 +91,10 @@ Rename `backend/.env.example` to `backend/.env` and fill in the placeholders:
 
 ---
 
-## Architecture Overview
-
-| Layer | Tech | Purpose |
-|-------|------|---------|
-| **Frontend** | React 18, TypeScript, Vite, Tailwind CSS, Framer Motion, React Flow | Visualises debate graphs and streams real‑time messages |
-| **Backend** | Spring Boot 3.4 (Java 21) | REST API, WebSocket/SSE, orchestration, task scheduling |
-| **LLM Orchestration** | NVIDIA NIM | Each agent drives a distinct LLM |
-| **Data Store** | PostgreSQL 16, Redis 7, Qdrant 1.9 | Persist conversation state, cache, vector search |
-| **Object Store** | MinIO | Store media attachments and logs |
-| **Deployment** | Docker Compose | One‑click launch of the entire stack |
-
----
-
 ## Agents
 
 | Agent | Role | Base model |
-|-------|------|------------|
+|-------|------|-----------|
 | Alexandra Chen | CEO | `z-ai/glm-5.2` |
 | Marcus Rivera | Product Manager | `z-ai/glm-5.2` |
 | Priya Sharma | Backend Engineer | `poolside/laguna-xs-2.1` |
@@ -116,40 +106,32 @@ Rename `backend/.env.example` to `backend/.env` and fill in the placeholders:
 | Aisha Patel | Customer Analyst | `moonshotai/kimi-k2.6` |
 | Emma Lindström | UI/UX Designer | `google/gemma-4-31b-it` |
 
-To add or replace an agent, simply update the corresponding environment variable in `backend/.env` and restart the backend.
+To change an agent, update the corresponding environment variable in `backend/.env` and restart the backend.
 
 ---
 
 ## Workflow
 
-```
-User query
-   ↓
-Independent analysis (10 agents)
-   ↓
-Cross‑review
-   ↓
-Critique & debate
-   ↓
-Iterative improvement
-   ↓
-Consensus engine
-   ↓
-CEO summary → User
-```
+1. **User query**  
+2. **Independent analysis** (10 agents)  
+3. **Cross‑review**  
+4. **Critique & debate**  
+5. **Iterative improvement**  
+6. **Consensus engine**  
+7. **CEO summary → User**
 
-The backend runs each step as an asynchronous task; the frontend streams each contribution in real‑time via WebSocket/SSE.
+The backend runs each step as an asynchronous task; the frontend streams contributions via WebSocket/SSE.
 
 ---
 
 ## Features
 
-- Real‑time collaboration with SSE and WebSocket
-- Asynchronous, non‑blocking processing via Spring Boot’s task executor
-- Vector search for long conversations using Qdrant
-- Configurable agent roles through environment variables
-- Secure, resilient storage: Redis cache, PostgreSQL persistence, MinIO object store
-- One‑click deployment using Docker Compose
+* Real‑time collaboration with WebSocket and SSE  
+* Asynchronous, non‑blocking processing through Spring Boot’s task executor  
+* Vector search for long conversations using Qdrant  
+* Configurable agent roles via environment variables  
+* Secure, resilient storage – Redis cache, PostgreSQL persistence, MinIO object store  
+* One‑click deployment with Docker Compose  
 
 ---
 
@@ -165,15 +147,15 @@ The backend runs each step as an asynchronous task; the frontend streams each co
 
 ### v1.2.0 – 2026‑08‑21
 
-- Standardised environment configuration
-- Added SSE streaming for faster UI updates
-- Refined cross‑review logic to improve consensus accuracy
+* Standardised environment configuration  
+* Added SSE streaming for faster UI updates  
+* Refined cross‑review logic to improve consensus accuracy  
 
 ---
 
 ## License
 
-Synapse is distributed under a **private license**. All rights reserved. See the [LICENSE](LICENSE) file for details.
+Synapse is distributed under a **proprietary license**. All rights reserved. See the [LICENSE](LICENSE) file for details.
 
 ---
 
