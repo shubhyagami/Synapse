@@ -1,14 +1,16 @@
 # Synapse – AI‑Powered Boardroom Simulation
 
-Synapse is an open‑source platform that orchestrates an autonomous board of ten agents.  
-Each agent interprets a user query, cross‑examines its peers, engages in structured debate, and iteratively refines its output until the **CEO** synthesises a consensus answer.
+Synapse is an open‑source platform that orchestrates a fully autonomous board of ten agents.  
+Each agent independently interprets a user query, cross‑examines its peers, engages in structured debate, and iteratively refines its output until the **CEO** synthesises a consensus answer.
 
-The stack is divided into the following layers:
+---
+
+## Architecture
 
 | Layer | Technology | Purpose |
-|-------|-------------|---------|
-| **Backend** | Java 21, Spring Boot 3.4 | REST API, WebSocket/SSE, orchestration, task scheduling |
-| **Frontend** | Vite + React 18, TypeScript, Tailwind CSS, Framer Motion, React Flow | Visualises debate graphs and streams real‑time messages |
+|-------|-------------|----------|
+| **Backend** | Java 21, Spring Boot 3.4 | REST API, WebSocket/SSE, orchestration & task scheduling |
+| **Frontend** | Vite + React 18, TypeScript, Tailwind CSS, Framer Motion, React‑Flow | Visualises debate graphs and streams real‑time messages |
 | **LLM Orchestration** | NVIDIA NIM | Each agent drives a distinct large language model |
 | **Datastore** | PostgreSQL 16, Redis 7, Qdrant 1.9 | Persists conversation state, caches, and performs vector search |
 | **Object Store** | MinIO | Stores media attachments and logs |
@@ -23,13 +25,13 @@ The stack is divided into the following layers:
 
 [![Build](https://github.com/shubhyagami/synapse/actions/workflows/build.yml/badge.svg)](https://github.com/shubhyagami/synapse/actions)
 [![Test](https://github.com/shubhyagami/synapse/actions/workflows/test.yml/badge.svg)](https://github.com/shubhyagami/synapse/actions)
-[![Coverage](https://coveralls.io/repos/github/shubhyagami/synapse/badge.svg?branch=main)](https://coveralls.io/github/shubhyagami/synapse)
+[![Coverage Status](https://coveralls.io/repos/github/shubhyagami/synapse/badge.svg?branch=main)](https://coveralls.io/github/shubhyagami/synapse)
 [![Docker Pulls](https://img.shields.io/docker/pulls/shubhyagami/synapse.svg)](https://hub.docker.com/r/shubhyagami/synapse)
 [![License](https://img.shields.io/badge/license-proprietary-red.svg)](LICENSE)
 
 ---
 
-## Quickstart
+## Quick Start
 
 ```bash
 # 1. Clone the repository
@@ -47,7 +49,7 @@ docker compose up -d
 #    http://localhost:5173
 ```
 
-### Running components separately
+### Running the components separately
 
 ```bash
 # Backend
@@ -81,7 +83,7 @@ Rename `backend/.env.example` to `backend/.env` and fill in the placeholders:
 
 | Variable | Description |
 |-----------|-------------|
-| `NVIDIA_NIM_API_KEY_1` … `NVIDIA_NIM_API_KEY_10` | API keys for up to ten NIM models |
+| `NVIDIA_NIM_API_KEY_1 … NVIDIA_NIM_API_KEY_10` | API keys for up to ten NIM models |
 | `DB_URL` | PostgreSQL JDBC URL (e.g. `jdbc:postgresql://localhost:5432/synapse`) |
 | `REDIS_URL` | Redis connection string |
 | `QDRANT_URL` | Qdrant endpoint |
@@ -106,32 +108,32 @@ Rename `backend/.env.example` to `backend/.env` and fill in the placeholders:
 | Aisha Patel | Customer Analyst | `moonshotai/kimi-k2.6` |
 | Emma Lindström | UI/UX Designer | `google/gemma-4-31b-it` |
 
-To change an agent, update the corresponding environment variable in `backend/.env` and restart the backend.
+To change an agent, modify the corresponding environment variable in `backend/.env` and restart the backend.
 
 ---
 
 ## Workflow
 
-1. **User query**  
-2. **Independent analysis** (10 agents)  
-3. **Cross‑review**  
-4. **Critique & debate**  
-5. **Iterative improvement**  
-6. **Consensus engine**  
-7. **CEO summary → User**
+1. **User submits a query**  
+2. **Independent analysis** – all 10 agents work in parallel  
+3. **Cross‑review** – agents examine each other’s outputs  
+4. **Critique & debate** – structured discussion and rebuttals  
+5. **Iterative improvement** – agents refine their responses  
+6. **Consensus engine** – the CEO synthesises a final answer  
+7. **Delivered to user**
 
-The backend runs each step as an asynchronous task; the frontend streams contributions via WebSocket/SSE.
+The backend schedules each step asynchronously; the frontend streams contributions via WebSocket/SSE.
 
 ---
 
 ## Features
 
-* Real‑time collaboration with WebSocket and SSE  
-* Asynchronous, non‑blocking processing through Spring Boot’s task executor  
-* Vector search for long conversations using Qdrant  
-* Configurable agent roles via environment variables  
-* Secure, resilient storage – Redis cache, PostgreSQL persistence, MinIO object store  
-* One‑click deployment with Docker Compose  
+- Real‑time collaboration with WebSocket/SSE  
+- Asynchronous, non‑blocking processing using Spring Boot’s task executor  
+- Vector search for long conversations via Qdrant  
+- Configurable agent roles via environment variables  
+- Secure storage: Redis cache, PostgreSQL persistence, MinIO object store  
+- One‑click deployment with Docker Compose  
 
 ---
 
@@ -147,9 +149,9 @@ The backend runs each step as an asynchronous task; the frontend streams contrib
 
 ### v1.2.0 – 2026‑08‑21
 
-* Standardised environment configuration  
-* Added SSE streaming for faster UI updates  
-* Refined cross‑review logic to improve consensus accuracy  
+- Standardised environment configuration  
+- Added SSE streaming for faster UI updates  
+- Refined cross‑review logic to improve consensus accuracy  
 
 ---
 
