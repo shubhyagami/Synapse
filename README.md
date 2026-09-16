@@ -1,7 +1,25 @@
-# Synapse – AI‑Powered Boardroom Simulation
+[K[2m  [2mmodel openai/gpt-oss-20b failed, trying next...[0m[0m
+[K[2m  [2mmodel openai/gpt-oss-120b failed, trying next...[0m[0m
+# Synapse – AI-Powered Boardroom Simulation
 
-Synapse is an open‑source platform that orchestrates a fully autonomous board of ten agents.  
-Each agent independently interprets a user query, cross‑examines its peers, engages in structured debate, and iteratively refines its output until the **CEO** synthesises a consensus answer.
+Synapse is an orchestration platform that simulates a fully autonomous board of ten specialized AI agents. Each agent independently interprets user queries, cross-examines its peers, and engages in structured debate to iteratively refine results until the **CEO** synthesizes a final consensus answer.
+
+[![Build](https://github.com/shubhyagami/synapse/actions/workflows/build.yml/badge.svg)](https://github.com/shubhyagami/synapse/actions)
+[![Test](https://github.com/shubhyagami/synapse/actions/workflows/test.yml/badge.svg)](https://github.com/shubhyagami/synapse/actions)
+[![Coverage](https://coveralls.io/repos/github/shubhyagami/synapse/badge.svg?branch=main)](https://coveralls.io/github/shubhyagami/synapse)
+[![Docker Pulls](https://img.shields.io/docker/pulls/shubhyagami/synapse.svg)](https://hub.docker.com/r/shubhyagami/synapse)
+[![License](https://img.shields.io/badge/license-proprietary-red.svg)](LICENSE)
+
+---
+
+## Core Features
+
+- **Multi-Agent Orchestration:** 10 specialized roles working in parallel to solve complex problems.
+- **Structured Debate:** Built-in cross-review and critique cycles to reduce hallucinations and improve accuracy.
+- **Real-time Visualization:** Live streaming of agent contributions and debate graphs via WebSockets/SSE.
+- **Hybrid Memory:** Long-term conversation state via PostgreSQL, caching via Redis, and vector search via Qdrant.
+- **Modular LLM Integration:** Powered by NVIDIA NIM, allowing each agent to drive a distinct model.
+- **Simplified Deployment:** Full-stack launch via Docker Compose.
 
 ---
 
@@ -9,29 +27,24 @@ Each agent independently interprets a user query, cross‑examines its peers, en
 
 | Layer | Technology | Purpose |
 |-------|-------------|----------|
-| **Backend** | Java 21, Spring Boot 3.4 | REST API, WebSocket/SSE, orchestration & task scheduling |
-| **Frontend** | Vite + React 18, TypeScript, Tailwind CSS, Framer Motion, React‑Flow | Visualises debate graphs and streams real‑time messages |
-| **LLM Orchestration** | NVIDIA NIM | Each agent drives a distinct large language model |
-| **Datastore** | PostgreSQL 16, Redis 7, Qdrant 1.9 | Persists conversation state, caches, and performs vector search |
-| **Object Store** | MinIO | Stores media attachments and logs |
-| **Deployment** | Docker Compose | One‑click launch of the entire stack |
-
-> **NOTE**  
-> Synapse is distributed under a proprietary license. All rights reserved.
+| **Backend** | Java 21, Spring Boot 3.4 | REST API, WebSocket/SSE, orchestration & scheduling |
+| **Frontend** | Vite, React 18, TS, Tailwind, React-Flow | Visualizing debate graphs and streaming messages |
+| **LLM Orchestration**| NVIDIA NIM | Model hosting and inference for agents |
+| **Datastore** | PostgreSQL 16, Redis 7, Qdrant 1.9 | State persistence, caching, and vector search |
+| **Object Store** | MinIO | Media attachments and system logs |
+| **Deployment** | Docker Compose | Containerized environment orchestration |
 
 ---
 
-## Badges
+## Getting Started
 
-[![Build](https://github.com/shubhyagami/synapse/actions/workflows/build.yml/badge.svg)](https://github.com/shubhyagami/synapse/actions)
-[![Test](https://github.com/shubhyagami/synapse/actions/workflows/test.yml/badge.svg)](https://github.com/shubhyagami/synapse/actions)
-[![Coverage Status](https://coveralls.io/repos/github/shubhyagami/synapse/badge.svg?branch=main)](https://coveralls.io/github/shubhyagami/synapse)
-[![Docker Pulls](https://img.shields.io/docker/pulls/shubhyagami/synapse.svg)](https://hub.docker.com/r/shubhyagami/synapse)
-[![License](https://img.shields.io/badge/license-proprietary-red.svg)](LICENSE)
+### Prerequisites
 
----
+- **Docker & Docker Compose** (v20.10+)
+- **Java JDK 21** (for local backend development)
+- **Node.js 20+** (for local frontend development)
 
-## Quick Start
+### Quick Start (Docker)
 
 ```bash
 # 1. Clone the repository
@@ -40,51 +53,41 @@ cd synapse
 
 # 2. Configure environment variables
 cp backend/.env.example backend/.env
-#    Edit the file – provide NIM API keys, database URLs, and credentials
+# Edit .env to provide NIM API keys and database credentials
 
-# 3. Start the stack
+# 3. Launch the stack
 docker compose up -d
 
-# 4. Open the UI
-#    http://localhost:5173
+# 4. Access the UI
+# http://localhost:5173
 ```
 
-### Running the components separately
+### Manual Development Setup
 
+**Backend:**
 ```bash
-# Backend
 cd backend
-./mvnw spring-boot:run   # Requires Java 21
+./mvnw spring-boot:run
+```
 
-# Frontend
-cd ../frontend
+**Frontend:**
+```bash
+cd frontend
 npm install
 npm run dev
 ```
-
-The frontend automatically connects to `http://localhost:8080`.
-
----
-
-## Prerequisites
-
-| Tool | Minimum version |
-|------|-----------------|
-| Docker | 20.10+ |
-| Docker Compose | v2 |
-| Java JDK | 21 |
-| Node.js | 20+ (npm or yarn) |
+*The frontend expects the backend to be available at `http://localhost:8080`.*
 
 ---
 
 ## Environment Configuration
 
-Rename `backend/.env.example` to `backend/.env` and fill in the placeholders:
+Configure your `backend/.env` file with the following variables:
 
 | Variable | Description |
 |-----------|-------------|
-| `NVIDIA_NIM_API_KEY_1 … NVIDIA_NIM_API_KEY_10` | API keys for up to ten NIM models |
-| `DB_URL` | PostgreSQL JDBC URL (e.g. `jdbc:postgresql://localhost:5432/synapse`) |
+| `NVIDIA_NIM_API_KEY_1...10` | API keys for the ten NIM models |
+| `DB_URL` | PostgreSQL JDBC URL |
 | `REDIS_URL` | Redis connection string |
 | `QDRANT_URL` | Qdrant endpoint |
 | `MINIO_ENDPOINT` | MinIO URL (e.g. `http://minio:9000`) |
@@ -93,65 +96,41 @@ Rename `backend/.env.example` to `backend/.env` and fill in the placeholders:
 
 ---
 
-## Agents
+## The Boardroom
 
-| Agent | Role | Base model |
+| Agent | Role | Default Model |
 |-------|------|-----------|
-| Alexandra Chen | CEO | `z-ai/glm-5.2` |
-| Marcus Rivera | Product Manager | `z-ai/glm-5.2` |
-| Priya Sharma | Backend Engineer | `poolside/laguna-xs-2.1` |
-| Jake Yamamoto | Frontend Engineer | `google/gemma-4-31b-it` |
-| Fatima Al‑Hassan | Cloud Architect | `poolside/laguna-xs-2.1` |
-| Dmitri Volkov | Security Engineer | `nvidia/nemotron-3-ultra-550b-a55b` |
-| Sarah Kim | QA Engineer | `stepfun-ai/step-3.7-flash` |
-| Leo Dubois | Marketing Strategist | `moonshotai/kimi-k2.6` |
-| Aisha Patel | Customer Analyst | `moonshotai/kimi-k2.6` |
-| Emma Lindström | UI/UX Designer | `google/gemma-4-31b-it` |
-
-To change an agent, modify the corresponding environment variable in `backend/.env` and restart the backend.
+| Alexandra Chen | CEO | `z-ai/glm-5.2` |
+| Marcus Rivera | Product Manager | `z-ai/glm-5.2` |
+| Priya Sharma | Backend Engineer | `poolside/laguna-xs-2.1` |
+| Jake Yamamoto | Frontend Engineer | `google/gemma-4-31b-it` |
+| Fatima Al-Hassan | Cloud Architect | `poolside/laguna-xs-2.1` |
+| Dmitri Volkov | Security Engineer | `nvidia/nemotron-3-ultra-550b-a55b` |
+| Sarah Kim | QA Engineer | `stepfun-ai/step-3.7-flash` |
+| Leo Dubois | Marketing Strategist | `moonshotai/kimi-k2.6` |
+| Aisha Patel | Customer Analyst | `moonshotai/kimi-k2.6` |
+| Emma Lindström | UI/UX Designer | `google/gemma-4-31b-it` |
 
 ---
 
-## Workflow
+## Operational Workflow
 
-1. **User submits a query**  
-2. **Independent analysis** – all 10 agents work in parallel  
-3. **Cross‑review** – agents examine each other’s outputs  
-4. **Critique & debate** – structured discussion and rebuttals  
-5. **Iterative improvement** – agents refine their responses  
-6. **Consensus engine** – the CEO synthesises a final answer  
-7. **Delivered to user**
-
-The backend schedules each step asynchronously; the frontend streams contributions via WebSocket/SSE.
-
----
-
-## Features
-
-- Real‑time collaboration with WebSocket/SSE  
-- Asynchronous, non‑blocking processing using Spring Boot’s task executor  
-- Vector search for long conversations via Qdrant  
-- Configurable agent roles via environment variables  
-- Secure storage: Redis cache, PostgreSQL persistence, MinIO object store  
-- One‑click deployment with Docker Compose  
-
----
-
-## Docker & CI
-
-| Build | Test | Coverage | Docker Pulls |
-|-------|------|----------|--------------|
-| ![Build](https://github.com/shubhyagami/synapse/actions/workflows/build.yml/badge.svg) | ![Test](https://github.com/shubhyagami/synapse/actions/workflows/test.yml/badge.svg) | ![Coverage](https://coveralls.io/repos/github/shubhyagami/synapse/badge.svg?branch=main) | ![Docker Pulls](https://img.shields.io/docker/pulls/shubhyagami/synapse.svg) |
+1. **Query Submission:** User provides a prompt via the UI.
+2. **Parallel Analysis:** All 10 agents generate independent initial interpretations.
+3. **Cross-Review:** Agents analyze peer outputs to find gaps or contradictions.
+4. **Debate & Critique:** A structured cycle of rebuttals and evidence-based discussion.
+5. **Refinement:** Agents update their responses based on the debate.
+6. **Synthesis:** The CEO agent aggregates the refined perspectives into a final consensus.
+7. **Delivery:** The final answer is streamed to the user.
 
 ---
 
 ## Changelog
 
-### v1.2.0 – 2026‑08‑21
-
-- Standardised environment configuration  
-- Added SSE streaming for faster UI updates  
-- Refined cross‑review logic to improve consensus accuracy  
+### v1.2.0 (2026-08-21)
+- Standardized environment configuration for easier onboarding.
+- Integrated SSE streaming for real-time UI updates.
+- Optimized cross-review logic for higher consensus accuracy.
 
 ---
 
@@ -159,14 +138,7 @@ The backend schedules each step asynchronously; the frontend streams contributio
 
 Synapse is distributed under a **proprietary license**. All rights reserved. See the [LICENSE](LICENSE) file for details.
 
----
+## Contributing & Support
 
-## Contributing
-
-Pull requests are welcome. Please open an issue first if you have a feature idea or bug report.
-
----
-
-## Support
-
-If you encounter a problem or have a question, open an issue on GitHub or email shubhyagami@example.com.
+- **Contributions:** Pull requests are welcome. Please open an issue to discuss feature ideas or bug reports first.
+- **Support:** For technical issues, please open a GitHub issue or contact `shubhyagami@example.com`.
