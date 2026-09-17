@@ -1,8 +1,7 @@
-[K[2m  [2mmodel openai/gpt-oss-20b failed, trying next...[0m[0m
-[K[2m  [2mmodel openai/gpt-oss-120b failed, trying next...[0m[0m
-# Synapse – AI-Powered Boardroom Simulation
+# Synapse – Autonomous Boardroom Simulation
 
-Synapse is an orchestration platform that simulates a fully autonomous board of ten specialized AI agents. Each agent independently interprets user queries, cross-examines its peers, and engages in structured debate to iteratively refine results until the **CEO** synthesizes a final consensus answer.
+Synapse orchestrates an autonomous board of ten specialized AI agents.  
+Each agent independently interprets user prompts, cross‑examines its peers, and engages in a structured debate until the **CEO** synthesizes a final, consensus answer.
 
 [![Build](https://github.com/shubhyagami/synapse/actions/workflows/build.yml/badge.svg)](https://github.com/shubhyagami/synapse/actions)
 [![Test](https://github.com/shubhyagami/synapse/actions/workflows/test.yml/badge.svg)](https://github.com/shubhyagami/synapse/actions)
@@ -14,25 +13,25 @@ Synapse is an orchestration platform that simulates a fully autonomous board of 
 
 ## Core Features
 
-- **Multi-Agent Orchestration:** 10 specialized roles working in parallel to solve complex problems.
-- **Structured Debate:** Built-in cross-review and critique cycles to reduce hallucinations and improve accuracy.
-- **Real-time Visualization:** Live streaming of agent contributions and debate graphs via WebSockets/SSE.
-- **Hybrid Memory:** Long-term conversation state via PostgreSQL, caching via Redis, and vector search via Qdrant.
-- **Modular LLM Integration:** Powered by NVIDIA NIM, allowing each agent to drive a distinct model.
-- **Simplified Deployment:** Full-stack launch via Docker Compose.
+- **Multi‑Agent Orchestration** – 10 distinct roles working in parallel.
+- **Structured Debate** – Cross‑review and critique cycles to reduce hallucinations.
+- **Real‑time Visualization** – Live streaming of contributions and debate graphs via WebSockets/SSE.
+- **Hybrid Persistence** – PostgreSQL for long‑term data, Redis for caching, and Qdrant for vector search.
+- **Modular LLM Back‑end** – Each agent can run a separate model via NVIDIA NIM.
+- **One‑Command Deployment** – Docker Compose stack for quick setup.
 
 ---
 
-## Architecture
+## Architecture Overview
 
 | Layer | Technology | Purpose |
-|-------|-------------|----------|
-| **Backend** | Java 21, Spring Boot 3.4 | REST API, WebSocket/SSE, orchestration & scheduling |
-| **Frontend** | Vite, React 18, TS, Tailwind, React-Flow | Visualizing debate graphs and streaming messages |
-| **LLM Orchestration**| NVIDIA NIM | Model hosting and inference for agents |
-| **Datastore** | PostgreSQL 16, Redis 7, Qdrant 1.9 | State persistence, caching, and vector search |
-| **Object Store** | MinIO | Media attachments and system logs |
-| **Deployment** | Docker Compose | Containerized environment orchestration |
+|-------|-------------|---------|
+| **Backend** | Java 21, Spring Boot 3.4 | REST API, WebSocket/SSE, orchestration, and scheduling |
+| **Frontend** | Vite, React 18, TypeScript, Tailwind, React‑Flow | Visualizes debate graphs and streams results |
+| **LLM Orchestration** | NVIDIA NIM | Host and run agents’ models |
+| **Persistence & Search** | PostgreSQL 16, Redis 7, Qdrant 1.9 | State, caching, vector search |
+| **Object Store** | MinIO | Media attachments and logs |
+| **Deployment** | Docker Compose | Container orchestration |
 
 ---
 
@@ -40,57 +39,58 @@ Synapse is an orchestration platform that simulates a fully autonomous board of 
 
 ### Prerequisites
 
-- **Docker & Docker Compose** (v20.10+)
-- **Java JDK 21** (for local backend development)
-- **Node.js 20+** (for local frontend development)
+- Docker ≥ 20.10 and Docker Compose
+- Java JDK 21 (for backend development)
+- Node JS ≥ 20 (for frontend development)
 
 ### Quick Start (Docker)
 
 ```bash
-# 1. Clone the repository
+# 1. Clone the repo
 git clone https://github.com/shubhyagami/synapse.git
 cd synapse
 
 # 2. Configure environment variables
 cp backend/.env.example backend/.env
-# Edit .env to provide NIM API keys and database credentials
+# Edit the file to add NIM keys and database credentials
 
 # 3. Launch the stack
 docker compose up -d
 
-# 4. Access the UI
+# 4. Open the UI
 # http://localhost:5173
 ```
 
-### Manual Development Setup
+### Manual Development
 
-**Backend:**
 ```bash
+# Backend
 cd backend
 ./mvnw spring-boot:run
 ```
 
-**Frontend:**
 ```bash
+# Frontend
 cd frontend
 npm install
 npm run dev
 ```
-*The frontend expects the backend to be available at `http://localhost:8080`.*
+
+*The frontend connects to the backend at `http://localhost:8080`.*
 
 ---
 
 ## Environment Configuration
 
-Configure your `backend/.env` file with the following variables:
+Edit `backend/.env` with the following variables:
 
 | Variable | Description |
-|-----------|-------------|
-| `NVIDIA_NIM_API_KEY_1...10` | API keys for the ten NIM models |
+|----------|-------------|
+| `NVIDIA_NIM_API_KEY_1…10` | API keys for the ten NIM models |
 | `DB_URL` | PostgreSQL JDBC URL |
 | `REDIS_URL` | Redis connection string |
 | `QDRANT_URL` | Qdrant endpoint |
-| `MINIO_ENDPOINT` | MinIO URL (e.g. `http://minio:9000`) |
+| `MINIO_ENDPOINT` | MinIO URL (e.g., `http://minio:9000`) |
 | `MINIO_ACCESS_KEY` | MinIO access key |
 | `MINIO_SECRET_KEY` | MinIO secret key |
 
@@ -99,12 +99,12 @@ Configure your `backend/.env` file with the following variables:
 ## The Boardroom
 
 | Agent | Role | Default Model |
-|-------|------|-----------|
+|-------|------|---------------|
 | Alexandra Chen | CEO | `z-ai/glm-5.2` |
 | Marcus Rivera | Product Manager | `z-ai/glm-5.2` |
 | Priya Sharma | Backend Engineer | `poolside/laguna-xs-2.1` |
 | Jake Yamamoto | Frontend Engineer | `google/gemma-4-31b-it` |
-| Fatima Al-Hassan | Cloud Architect | `poolside/laguna-xs-2.1` |
+| Fatima Al‑Hassan | Cloud Architect | `poolside/laguna-xs-2.1` |
 | Dmitri Volkov | Security Engineer | `nvidia/nemotron-3-ultra-550b-a55b` |
 | Sarah Kim | QA Engineer | `stepfun-ai/step-3.7-flash` |
 | Leo Dubois | Marketing Strategist | `moonshotai/kimi-k2.6` |
@@ -115,22 +115,23 @@ Configure your `backend/.env` file with the following variables:
 
 ## Operational Workflow
 
-1. **Query Submission:** User provides a prompt via the UI.
-2. **Parallel Analysis:** All 10 agents generate independent initial interpretations.
-3. **Cross-Review:** Agents analyze peer outputs to find gaps or contradictions.
-4. **Debate & Critique:** A structured cycle of rebuttals and evidence-based discussion.
-5. **Refinement:** Agents update their responses based on the debate.
-6. **Synthesis:** The CEO agent aggregates the refined perspectives into a final consensus.
-7. **Delivery:** The final answer is streamed to the user.
+1. **Query Submission** – User enters a prompt via the UI.  
+2. **Parallel Analysis** – All 10 agents generate independent interpretations.  
+3. **Cross‑Review** – Agents examine peers’ outputs to spot gaps or contradictions.  
+4. **Debate & Critique** – Structured cycles of rebuttals and evidence‑based discussion.  
+5. **Refinement** – Agents update their responses based on the debate.  
+6. **Synthesis** – The CEO aggregates the refined perspectives into a final answer.  
+7. **Delivery** – The consensus answer is streamed back to the user.
 
 ---
 
 ## Changelog
 
-### v1.2.0 (2026-08-21)
-- Standardized environment configuration for easier onboarding.
-- Integrated SSE streaming for real-time UI updates.
-- Optimized cross-review logic for higher consensus accuracy.
+### v1.2.0 (2026‑08‑21)
+
+- Unified environment configuration for easier onboarding.  
+- Added SSE streaming for real‑time UI updates.  
+- Optimized cross‑review logic to improve consensus accuracy.
 
 ---
 
@@ -138,7 +139,11 @@ Configure your `backend/.env` file with the following variables:
 
 Synapse is distributed under a **proprietary license**. All rights reserved. See the [LICENSE](LICENSE) file for details.
 
+---
+
 ## Contributing & Support
 
-- **Contributions:** Pull requests are welcome. Please open an issue to discuss feature ideas or bug reports first.
-- **Support:** For technical issues, please open a GitHub issue or contact `shubhyagami@example.com`.
+- **Pull requests** are welcome. Please open an issue first to discuss your idea or report a bug.  
+- **Technical support** – submit a GitHub issue or email `shubhyagami@example.com`.  
+
+---
