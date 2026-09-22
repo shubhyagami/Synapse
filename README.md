@@ -1,7 +1,6 @@
 # Synapse – Autonomous Boardroom Simulation
 
-Synapse orchestrates an autonomous board of ten specialized AI agents.  
-Each agent independently interprets user prompts, cross‑examines its peers, and engages in a structured debate until the **CEO** synthesizes a final, consensus answer.
+Synapse orchestrates a virtual board of ten AI agents that collaborate to answer user prompts. Each agent independently interprets the prompt, critiques its peers, and participates in a structured debate until the CEO synthesizes a final consensus answer.
 
 [![Build](https://github.com/shubhyagami/synapse/actions/workflows/build.yml/badge.svg)](https://github.com/shubhyagami/synapse/actions)
 [![Test](https://github.com/shubhyagami/synapse/actions/workflows/test.yml/badge.svg)](https://github.com/shubhyagami/synapse/actions)
@@ -13,90 +12,94 @@ Each agent independently interprets user prompts, cross‑examines its peers, an
 
 ## Core Features
 
-- **Multi‑Agent Orchestration** – 10 distinct roles working in parallel.
-- **Structured Debate** – Cross‑review and critique cycles to reduce hallucinations.
-- **Real‑time Visualization** – Live streaming of contributions and debate graphs via WebSockets/SSE.
-- **Hybrid Persistence** – PostgreSQL for long‑term data, Redis for caching, and Qdrant for vector search.
-- **Modular LLM Back‑end** – Each agent can run a separate model via NVIDIA NIM.
-- **One‑Command Deployment** – Docker Compose stack for quick setup.
+| Feature | Description |
+|---------|-------------|
+| **Ten‑Agent Orchestration** | Each agent has a distinct role and runs its own model. |
+| **Structured Debate** | Agents cross‑review and debate to reduce hallucinations. |
+| **Real‑time UI** | Live streaming of debate flows and graph visualizations via WebSockets/SSE. |
+| **Hybrid Persistence** | PostgreSQL for long‑term state, Redis for caching, Qdrant for vector search. |
+| **Modular LLM Backend** | Agents can use any NVIDIA NIM‑hosted model. |
+| **Zero‑config Docker** | `docker compose up` starts the entire stack. |
 
 ---
 
 ## Architecture Overview
 
 | Layer | Technology | Purpose |
-|-------|-------------|---------|
-| **Backend** | Java 21, Spring Boot 3.4 | REST API, WebSocket/SSE, orchestration, and scheduling |
-| **Frontend** | Vite, React 18, TypeScript, Tailwind, React‑Flow | Visualizes debate graphs and streams results |
-| **LLM Orchestration** | NVIDIA NIM | Host and run agents’ models |
+|-------|-----------|---------|
+| **Backend** | Java 21, Spring Boot 3.4 | REST API, WebSocket/SSE, orchestration, scheduling |
+| **Frontend** | Vite + React 18 + TypeScript + Tailwind CSS + React‑Flow | Debate graph, result streams, control panel |
+| **LLM Orchestration** | NVIDIA NIM | Hosts and runs agents’ models |
 | **Persistence & Search** | PostgreSQL 16, Redis 7, Qdrant 1.9 | State, caching, vector search |
 | **Object Store** | MinIO | Media attachments and logs |
 | **Deployment** | Docker Compose | Container orchestration |
 
 ---
 
-## Getting Started
-
-### Prerequisites
-
-- Docker ≥ 20.10 and Docker Compose
-- Java JDK 21 (for backend development)
-- Node JS ≥ 20 (for frontend development)
-
-### Quick Start (Docker)
+## Quick Start (Docker)
 
 ```bash
-# 1. Clone the repo
+# 1. Clone the repository
 git clone https://github.com/shubhyagami/synapse.git
 cd synapse
 
 # 2. Configure environment variables
 cp backend/.env.example backend/.env
-# Edit the file to add NIM keys and database credentials
+# edit the file: add NIM keys and database credentials
 
-# 3. Launch the stack
+# 3. Start all services
 docker compose up -d
 
-# 4. Open the UI
+# 4. Open the web UI
 # http://localhost:5173
 ```
 
-### Manual Development
+The UI connects automatically to the backend at `http://localhost:8080`.
+
+---
+
+## Manual Development
+
+> These steps are needed only if you plan to contribute to the code.
+
+### Backend
 
 ```bash
-# Backend
 cd backend
 ./mvnw spring-boot:run
 ```
 
+### Frontend
+
 ```bash
-# Frontend
 cd frontend
 npm install
 npm run dev
 ```
 
-*The frontend connects to the backend at `http://localhost:8080`.*
+The frontend dev server runs on `http://localhost:5173` and proxies API calls to `http://localhost:8080`.
 
 ---
 
-## Environment Configuration
+## Configuration
 
-Edit `backend/.env` with the following variables:
+Edit `backend/.env` to provide the following variables:
 
-| Variable | Description |
-|----------|-------------|
-| `NVIDIA_NIM_API_KEY_1…10` | API keys for the ten NIM models |
+| Variable | Purpose |
+|----------|---------|
+| `NVIDIA_NIM_API_KEY_1…10` | NIM API keys for the ten agents |
 | `DB_URL` | PostgreSQL JDBC URL |
 | `REDIS_URL` | Redis connection string |
 | `QDRANT_URL` | Qdrant endpoint |
-| `MINIO_ENDPOINT` | MinIO URL (e.g., `http://minio:9000`) |
+| `MINIO_ENDPOINT` | MinIO URL (e.g. `http://minio:9000`) |
 | `MINIO_ACCESS_KEY` | MinIO access key |
 | `MINIO_SECRET_KEY` | MinIO secret key |
 
+The `.env.example` file already contains placeholder values.
+
 ---
 
-## The Boardroom
+## Agent Roles
 
 | Agent | Role | Default Model |
 |-------|------|---------------|
@@ -115,35 +118,33 @@ Edit `backend/.env` with the following variables:
 
 ## Operational Workflow
 
-1. **Query Submission** – User enters a prompt via the UI.  
-2. **Parallel Analysis** – All 10 agents generate independent interpretations.  
-3. **Cross‑Review** – Agents examine peers’ outputs to spot gaps or contradictions.  
-4. **Debate & Critique** – Structured cycles of rebuttals and evidence‑based discussion.  
-5. **Refinement** – Agents update their responses based on the debate.  
-6. **Synthesis** – The CEO aggregates the refined perspectives into a final answer.  
-7. **Delivery** – The consensus answer is streamed back to the user.
+1. **Prompt** – User submits a question through the UI.  
+2. **Parallel Generation** – Each agent creates an independent reply.  
+3. **Cross‑Review** – Agents analyze each other’s outputs.  
+4. **Debate** – Structured rebuttals and evidence exchange occur.  
+5. **Revision** – Agents update their replies after the debate.  
+6. **Synthesis** – CEO aggregates the refined replies into a final answer.  
+7. **Delivery** – The consensus answer streams back to the user.
 
 ---
 
 ## Changelog
 
-### v1.2.0 (2026‑08‑21)
+### v1.2.0 – 2026‑08‑21
 
-- Unified environment configuration for easier onboarding.  
+- Unified environment configuration for a smoother onboarding experience.  
 - Added SSE streaming for real‑time UI updates.  
-- Optimized cross‑review logic to improve consensus accuracy.
+- Optimized cross‑review logic, improving consensus accuracy.
 
 ---
 
 ## License
 
-Synapse is distributed under a **proprietary license**. All rights reserved. See the [LICENSE](LICENSE) file for details.
+Synapse is released under a **proprietary license**. All rights reserved. See the [LICENSE](LICENSE) file for details.
 
 ---
 
 ## Contributing & Support
 
-- **Pull requests** are welcome. Please open an issue first to discuss your idea or report a bug.  
-- **Technical support** – submit a GitHub issue or email `shubhyagami@example.com`.  
-
----
+Pull requests are welcome. For new features or bug reports, open a GitHub issue first to discuss.  
+For technical support, create an issue or email `shubhyagami@example.com`.
